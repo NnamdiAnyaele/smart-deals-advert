@@ -1,0 +1,76 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "jest/globals": true
+    },
+    "extends": [
+      "plugin:react/recommended",
+      "airbnb",
+      "prettier",
+      "prettier/prettier",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "jest",
+      "react-hooks",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": 0,
+      "func-names": "off",
+      "class-methods-use-this": "off",
+      "no-useless-catch": "warn",
+      "global-require": "warn",
+      "import/no-dynamic-require": "warn",
+      "react/no-unescaped-entities": "off",
+      "react/prop-types": "off",
+      "react/button-has-type": "off",
+      "react/jsx-props-no-spreading": "off",
+      "jsx-a11y/click-events-have-key-events": "off",
+      "jsx-a11y/no-static-element-interactions": "off",
+      "jsx-a11y/control-has-associated-label": "off",
+      "react/no-array-index-key": "off",
+      "jsx-a11y/label-has-associated-control": "off",
+      "react/destructuring-assignment": "off",
+      "react/jsx-no-bind": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "no-use-before-define": [
+        "error",
+        {
+          "variables": false
+        }
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 80,
+          "trailingComma": "es5",
+          "semi": true,
+          "endOfLine": "auto",
+          "useTabs": true,
+          "tabWidth": 2
+        }
+      ],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "react-hooks/rules-of-hooks": "error"
+    }
+  }
