@@ -40,7 +40,7 @@ const pageTitleContainerStyles = {
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "center",
-	height: { md: "23.75rem", xs: "auto" },
+	height: { md: "23rem", xs: "auto" },
 	width: {
 		xs: "100%",
 		md: "50%",
@@ -75,7 +75,7 @@ const titleStyles = {
 };
 
 const addGroupContainerStyles = {
-	height: "23.75rem",
+	height: "23rem",
 	maxidth: "100%",
 	display: "flex",
 	justifyContent: "flex-end",

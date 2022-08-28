@@ -10,6 +10,9 @@ import LoginSignup from "../views/LoginSignup/LoginSignup";
 // import ChangePassword from "../views/ChangePassword";
 // import Notifications from "../views/Notifications";
 // import ProtectedRoute from "../../components/common/ProtectedRoutes";
+import TermsConditions from "../views/TermsConditions";
+import PrivacyPolicy from "../views/PrivacyPolicy";
+import HowItWorks from "../views/HowItWorks";
 
 const BaseRoute = () => {
 	// const { user } = useSelector((state) => state.auth);
@@ -22,6 +25,9 @@ const BaseRoute = () => {
 				<Route path="/forgot-password" element={<ForgotPassword />} />
 				<Route path="/login" element={<LoginSignup />} />
 				<Route path="/signup" element={<LoginSignup />} />
+				<Route path="/terms-and-conditions" element={<TermsConditions />} />
+				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+				<Route path="/how-it-works" element={<HowItWorks />} />
 
 				{/* <Route path="/customer" element={<PartnerLayout />}>
 					<Route index element={<Navigate to="dashboard" />} />

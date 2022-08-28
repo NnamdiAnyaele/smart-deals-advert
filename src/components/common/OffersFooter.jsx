@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import MuiLink from "@mui/material/Link";
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 
 const OffersFooter = ({ styles }) => {
+	const { isAuthenticated } = useSelector((state) => state.auth);
 	return (
 		<Grid
 			container
@@ -31,9 +32,6 @@ const OffersFooter = ({ styles }) => {
 					our offers
 				</Grid>
 			</Grid>
-			<Grid item xs={12} sx={styles} component={Link} to="/subscription">
-				Subscription
-			</Grid>
 			<Grid item xs={12} sx={styles} component={Link} to="/sdc-partners">
 				SDC Partners
 			</Grid>
@@ -41,10 +39,8 @@ const OffersFooter = ({ styles }) => {
 				item
 				xs={12}
 				sx={styles}
-				component={MuiLink}
-				href="https://advert.smartdeals.com.ng"
-				target="_blank"
-				rel="noopener noreferrer"
+				component={Link}
+				to={isAuthenticated ? "/customer/dashboard" : "/login"}
 			>
 				Advertise
 			</Grid>

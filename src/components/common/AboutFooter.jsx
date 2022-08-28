@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 
 const AboutFooter = ({ styles }) => {
+	const { isAuthenticated } = useSelector((state) => state.auth);
 	return (
 		<Grid
 			container
@@ -30,11 +32,14 @@ const AboutFooter = ({ styles }) => {
 					about
 				</Grid>
 			</Grid>
-			<Grid item xs={12} sx={styles} component={Link} to="/your-account">
+			<Grid
+				item
+				xs={12}
+				sx={styles}
+				component={Link}
+				to={isAuthenticated ? "/customer/dashboard" : "/login"}
+			>
 				Your Account
-			</Grid>
-			<Grid item xs={12} sx={styles} component={Link} to="/deals-won">
-				Deals Won
 			</Grid>
 		</Grid>
 	);
