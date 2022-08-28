@@ -9,6 +9,7 @@ import BaseRoute from "./Pages/routes/BaseRoutes";
 import { loginSuccess } from "./slices/authSlice";
 import auth from "./utils/helpers/auth";
 import { USERKEY } from "./utils/constants";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import "react-toastify/dist/ReactToastify.css";
 
 if (auth.authenticate()) {
