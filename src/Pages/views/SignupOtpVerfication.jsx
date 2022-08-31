@@ -20,7 +20,7 @@ import {
 	createAccount,
 } from "../../api/common/auth";
 import { addSeconds } from "../../utils/helpers/functions";
-import { ROLES, DEVICETYPE } from "../../utils/constants";
+import { DEVICETYPE } from "../../utils/constants";
 import FormHeader from "../../components/common/FormHeader";
 import FormFooter from "../../components/common/FormFooter";
 import AuthSuccessModal from "../../components/common/AuthSuccessModal";
@@ -32,7 +32,7 @@ const errorStyle = {
 
 const EmailOtpVerfication = () => {
 	const [otp, setOtp] = useState("");
-	const [targetDate, setTargetDate] = useState(addSeconds(60));
+	const [targetDate, setTargetDate] = useState(addSeconds(1800));
 	const [openSuccessModal, setOpenSuccessModal] = useState(false);
 	const [verifyLoading, setVerifyLoading] = useState(false);
 	const [createAccountLoading, setCreateAccountLoading] = useState(false);
@@ -80,7 +80,7 @@ const EmailOtpVerfication = () => {
 	}, []);
 
 	const handleOtpResend = async () => {
-		setTargetDate(addSeconds(60));
+		setTargetDate(addSeconds(1800));
 		try {
 			const payload = {
 				username: locationState?.payload?.username,
@@ -122,6 +122,7 @@ const EmailOtpVerfication = () => {
 			setVerifyLoading(false);
 		} catch (error) {
 			setVerifyLoading(false);
+			setOtp("");
 			if (error.response) {
 				toast.error(error.response.data?.message);
 			} else if (error.request) {
@@ -135,10 +136,11 @@ const EmailOtpVerfication = () => {
 	const handleCreateAccount = async () => {
 		try {
 			setCreateAccountLoading(true);
-			const partnerPayload = {
+			const payload = {
 				otp,
 				partnerName: locationState?.payload?.merchantName,
 				username: locationState?.payload?.username,
+				customerName: locationState?.payload?.name,
 				password: locationState?.payload?.password,
 				emailAddress: locationState?.payload?.email,
 				phoneNumber: locationState?.payload?.phoneNumber,
@@ -148,23 +150,7 @@ const EmailOtpVerfication = () => {
 				accountType: role,
 				region: region?.region,
 			};
-
-			const memberPayload = {
-				otp,
-				username: locationState?.payload?.username,
-				password: locationState?.payload?.password,
-				emailAddress: locationState?.payload?.email,
-				phoneNumber: locationState?.payload?.phoneNumber,
-				referrer: locationState?.payload?.referralCode || "N/A",
-				bizFrom,
-				deviceType: DEVICETYPE,
-				accountType: role,
-				region: region?.region,
-			};
-			const result =
-				role === ROLES?.PARTNER
-					? await createAccount(partnerPayload)
-					: await createAccount(memberPayload);
+			const result = await createAccount(payload);
 			toast.success(result.message);
 			setOtp("");
 			setOpenSuccessModal(true);
@@ -304,7 +290,9 @@ const EmailOtpVerfication = () => {
 											color="secondary"
 											component="span"
 										>
-											{`(00:${
+											{`(${
+												minutes > 0 ? String(minutes).padStart(2, "0") : "00"
+											}:${
 												seconds > 0 ? String(seconds).padStart(2, "0") : "00"
 											})`}
 										</Typography>

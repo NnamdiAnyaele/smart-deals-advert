@@ -39,11 +39,11 @@ const formContainerStyles = {
 
 const defaultSignUpFields = {
 	username: "",
+	name: "",
 	email: "",
 	phoneNumber: "",
 	password: "",
 	isChecked: false,
-	merchantName: "",
 	referralCode: "",
 };
 
@@ -53,8 +53,7 @@ const defaultLoginFields = {
 };
 
 const userRedirectLinks = {
-	[ROLES.PARTNER]: "/partner/dashboard",
-	[ROLES.MEMBER]: "/member/dashboard",
+	[ROLES.CUSTOMER]: "/customer/dashboard",
 };
 
 const LoginSignup = () => {
@@ -102,11 +101,11 @@ const LoginSignup = () => {
 		resetForm();
 		const payload = {
 			username: values.username.trim(),
+			name: values.name.trim(),
 			email: values.email.trim(),
 			phoneNumber: values.phoneNumber.trim(),
 			password: values.password.trim(),
 			isChecked: values.isChecked,
-			merchantName: values.merchantName.trim(),
 			referralCode: values.referralCode.trim(),
 		};
 		navigate("/otp-verification", { state: { payload } });

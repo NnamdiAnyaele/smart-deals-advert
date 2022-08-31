@@ -106,7 +106,11 @@ const ForgotPasswordOtpModal = ({
 						<Typography variant="body1" component="div" sx={{ mb: "1rem" }}>
 							Resend code in{" "}
 							<Typography variant="body1" color="secondary" component="span">
-								{`(00:${
+								{`(${
+									time.minutes > 0
+										? String(time.minutes).padStart(2, "0")
+										: "00"
+								}:${
 									time.seconds > 0
 										? String(time.seconds).padStart(2, "0")
 										: "00"

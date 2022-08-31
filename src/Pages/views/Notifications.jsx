@@ -43,7 +43,7 @@ const Notifications = () => {
 		setAnchorEl(null);
 	};
 
-	const { user, bizFrom } = useSelector((state) => state.auth);
+	const { user, bizFrom, role } = useSelector((state) => state.auth);
 	const queryClient = useQueryClient();
 
 	const {
@@ -52,9 +52,8 @@ const Notifications = () => {
 		isError: allNotificationsError,
 		error: allNotificationsErrorMessage,
 	} = useQuery(
-		["get-notitfications", user.username, user.region, bizFrom, user.role],
-		async () =>
-			fetchNotifications(user.username, user.region, bizFrom, user.role),
+		["get-notitfications", user.username, user.region, bizFrom, role],
+		async () => fetchNotifications(user.username, user.region, bizFrom, role),
 		{
 			select: (data) => data.data,
 			staleTime: Infinity,
@@ -62,7 +61,7 @@ const Notifications = () => {
 				Boolean(user.region) &&
 				Boolean(user.username) &&
 				Boolean(bizFrom) &&
-				Boolean(user.role),
+				Boolean(role),
 		}
 	);
 
@@ -145,7 +144,7 @@ const Notifications = () => {
 			ID: selectedNotifcation.id,
 			region: user.region,
 			bizFrom,
-			accountType: user.role?.toUpperCase(),
+			accountType: role?.toUpperCase(),
 		};
 		await readNotification(payload);
 	};
@@ -224,7 +223,7 @@ const Notifications = () => {
 			username: user.username,
 			region: user.region,
 			bizFrom,
-			accountType: user.role?.toUpperCase(),
+			accountType: role?.toUpperCase(),
 		};
 		await readNotifications(payload);
 	};
@@ -234,7 +233,7 @@ const Notifications = () => {
 			username: user.username,
 			region: user.region,
 			bizFrom,
-			accountType: user.role?.toUpperCase(),
+			accountType: role?.toUpperCase(),
 		};
 		await deleteAllNotifications(payload);
 	};
@@ -244,7 +243,7 @@ const Notifications = () => {
 			username: selectedNotifcation.username,
 			ID: selectedNotifcation.id,
 			region: user.region,
-			accountType: user.role?.toUpperCase(),
+			accountType: role?.toUpperCase(),
 		};
 		await deleteOneNotifications(payload);
 	};

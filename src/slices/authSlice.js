@@ -68,7 +68,7 @@ const authSlice = createSlice({
 			state.region.region_logo =
 				action.payload.region_logo ||
 				"https://doc.smartdeals.com.ng/files/region/NG/region.jpg";
-			state.role = action.payload.role;
+			state.role = action.payload.role || ROLES.CUSTOMER;
 		},
 		setRegion(state, action) {
 			state.region.name = action.payload.name;

@@ -17,47 +17,18 @@ import {
 	specialCharacterCheck,
 	digitCheck,
 	uppercaseCheck,
-	ROLES,
 } from "../../utils/constants";
 import { checkUsername, checkEmailAddress } from "../../api/common/auth";
 
-const partnerValidationSchema = yup.object({
+const validationSchema = yup.object({
 	username: yup
 		.string("Please enter your username")
 		.min(3, "Username should be of minimum 3 characters length")
 		.required("Username is required"),
-	merchantName: yup
+	name: yup
 		.string("Please enter your merchant name")
 		.min(3, "Merchant name should be of minimum 3 characters length")
 		.required("Merchant name is required"),
-	email: yup
-		.string("Please enter your email")
-		.email("Please enter a valid email")
-		.required("Email is required"),
-	phoneNumber: yup
-		.string("Please enter your phone number")
-		.min(10, "Phone number should be of minimum 10 characters length")
-		.required("Phone number is required"),
-	password: yup
-		.string("Please enter your password")
-		.min(7, "Password should be of minimum 7 characters length")
-		.matches(
-			specialCharacterCheck,
-			"Password should contain at least one special character"
-		)
-		.matches(digitCheck, "Password should contain at least one digit")
-		.matches(
-			uppercaseCheck,
-			"Password should contain at least one uppercase character"
-		)
-		.required("Password is required"),
-});
-
-const merchantValidationSchema = yup.object({
-	username: yup
-		.string("Please enter your username")
-		.min(3, "Username should be of minimum 3 characters length")
-		.required("Username is required"),
 	email: yup
 		.string("Please enter your email")
 		.email("Please enter a valid email")
@@ -89,10 +60,7 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 
 	const formik = useFormik({
 		initialValues: signUpFields,
-		validationSchema:
-			role === ROLES.PARTNER
-				? partnerValidationSchema
-				: merchantValidationSchema,
+		validationSchema,
 		onSubmit: (values) => {
 			handleSubmit(
 				values,
@@ -112,7 +80,7 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 						accountType: role,
 					};
 					await checkUsername(payload);
-					setExistEmailMessage("");
+					setExistUsernameMessage("");
 				}
 			} catch (error) {
 				if (error.response) {
@@ -204,25 +172,20 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 								}
 							/>
 						</Box>
-						{role === ROLES.PARTNER && (
-							<Box sx={{ mb: "1rem" }}>
-								<TextFieldComponent
-									value={formik.values.merchantName}
-									onChange={formik.handleChange}
-									label="Merchant Name"
-									id="merchantName"
-									name="merchantName"
-									required
-									error={
-										formik.touched.merchantName &&
-										Boolean(formik.errors.merchantName)
-									}
-									helperText={
-										formik.touched.merchantName && formik.errors.merchantName
-									}
-								/>
-							</Box>
-						)}
+
+						<Box sx={{ mb: "1rem" }}>
+							<TextFieldComponent
+								value={formik.values.name}
+								onChange={formik.handleChange}
+								label="Name"
+								id="name"
+								name="name"
+								required
+								error={formik.touched.name && Boolean(formik.errors.name)}
+								helperText={formik.touched.name && formik.errors.merchantName}
+							/>
+						</Box>
+
 						<Box sx={{ mb: "1rem" }}>
 							<TextFieldComponent
 								value={formik.values.referralCode}

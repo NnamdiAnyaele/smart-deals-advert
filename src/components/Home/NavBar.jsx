@@ -105,7 +105,7 @@ export default function ElevateAppBar({
 			user.role,
 		],
 		async () =>
-			fetchUnreadNotifications(user.username, user.region, bizFrom, user.role),
+			fetchUnreadNotifications(user.username, user.region, bizFrom, role),
 		{
 			select: (data) => data?.data,
 			staleTime: 4 * 60 * 1000,
@@ -113,7 +113,7 @@ export default function ElevateAppBar({
 				Boolean(user.region) &&
 				Boolean(user.username) &&
 				Boolean(bizFrom) &&
-				Boolean(user.role) &&
+				Boolean(role) &&
 				Boolean(isAuthenticated),
 		}
 	);

@@ -66,7 +66,7 @@ export const addSeconds = (seconds, date = new Date()) => {
 };
 
 export const numberFormatter = (number, float = 2) => {
-	if (number) {
+	if (number || Number(number) === 0) {
 		if (Number.isInteger(Number(number))) {
 			return Number(number).toLocaleString("en-US");
 		}

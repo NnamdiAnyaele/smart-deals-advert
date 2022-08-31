@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Home from "../views/Home";
 import Logout from "../../components/common/Logout";
 import NotFound from "../views/NotFoundPage/NotFoundPage";
@@ -7,15 +7,21 @@ import NotFound from "../views/NotFoundPage/NotFoundPage";
 import OtpVerification from "../views/SignupOtpVerfication";
 import ForgotPassword from "../views/ForgotPassword";
 import LoginSignup from "../views/LoginSignup/LoginSignup";
-// import ChangePassword from "../views/ChangePassword";
-// import Notifications from "../views/Notifications";
-// import ProtectedRoute from "../../components/common/ProtectedRoutes";
+import ChangePassword from "../views/ChangePassword";
+import Notifications from "../views/Notifications";
+import ProtectedRoute from "../../components/common/ProtectedRoutes";
 import TermsConditions from "../views/TermsConditions";
 import PrivacyPolicy from "../views/PrivacyPolicy";
 import HowItWorks from "../views/HowItWorks";
+import CustomerLayout from "../../components/Customer/CustomerLayout";
+import Dashboard from "../views/Dashboard";
+import AdvertHistory from "../views/AdvertHistory";
+import ApprovedAdverts from "../views/ApprovedAdverts";
+import PaidAdvert from "../views/PaidAdvert";
 
 const BaseRoute = () => {
-	// const { user } = useSelector((state) => state.auth);
+	const { user, role } = useSelector((state) => state.auth);
+	const isAllowed = !!user && role?.toLowerCase() === "customer";
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -29,24 +35,44 @@ const BaseRoute = () => {
 				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 				<Route path="/how-it-works" element={<HowItWorks />} />
 
-				{/* <Route path="/customer" element={<PartnerLayout />}>
+				<Route path="/customer" element={<CustomerLayout />}>
 					<Route index element={<Navigate to="dashboard" />} />
 					<Route
 						path="dashboard"
 						element={
-							<ProtectedRoute
-								isAllowed={!!user && role?.toLowerCase() === "partner"}
-							>
-								<PartnerDashboard />
+							<ProtectedRoute isAllowed={isAllowed}>
+								<Dashboard />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="advert-history"
+						element={
+							<ProtectedRoute isAllowed={isAllowed}>
+								<AdvertHistory />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="approved-adverts"
+						element={
+							<ProtectedRoute isAllowed={isAllowed}>
+								<ApprovedAdverts />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="paid-adverts"
+						element={
+							<ProtectedRoute isAllowed={isAllowed}>
+								<PaidAdvert />
 							</ProtectedRoute>
 						}
 					/>
 					<Route
 						path="change-password"
 						element={
-							<ProtectedRoute
-								isAllowed={!!user && role?.toLowerCase() === "partner"}
-							>
+							<ProtectedRoute isAllowed={isAllowed}>
 								<ChangePassword />
 							</ProtectedRoute>
 						}
@@ -54,24 +80,12 @@ const BaseRoute = () => {
 					<Route
 						path="notifications"
 						element={
-							<ProtectedRoute
-								isAllowed={!!user && role?.toLowerCase() === "partner"}
-							>
+							<ProtectedRoute isAllowed={isAllowed}>
 								<Notifications />
 							</ProtectedRoute>
 						}
 					/>
-					<Route
-						path="share-link"
-						element={
-							<ProtectedRoute
-								isAllowed={!!user && role?.toLowerCase() === "partner"}
-							>
-								<ShareLink />
-							</ProtectedRoute>
-						}
-					/>
-				</Route> */}
+				</Route>
 
 				<Route path="*" element={<NotFound />} />
 			</Routes>

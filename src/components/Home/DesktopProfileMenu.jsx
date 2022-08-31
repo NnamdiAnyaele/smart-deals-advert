@@ -16,7 +16,7 @@ const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
 
 	return (
 		<div>
-			{role === ROLES.PARTNER && (
+			{role === ROLES.CUSTOMER && (
 				<Menu
 					id="deskotp-profile-menu"
 					anchorEl={anchorEl}
@@ -27,7 +27,7 @@ const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
 					}}
 					sx={{ textAlign: "right" }}
 				>
-					<MenuItem component={Link} to="/partner/dashboard">
+					<MenuItem component={Link} to="/customer/dashboard">
 						<Typography
 							variant="body2"
 							component="div"
@@ -36,31 +36,58 @@ const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
 							dashboard
 						</Typography>
 					</MenuItem>
-					<MenuItem component={Link} to="/partner/discount-history">
+					<MenuItem component={Link} to="/customer/advert-history">
 						<Typography
 							variant="body2"
 							component="div"
 							sx={{ textTransform: "capitalize" }}
 						>
-							discount history
+							advert history
 						</Typography>
 					</MenuItem>
-					<MenuItem component={Link} to="/partner/share-link">
+					<MenuItem component={Link} to="/customer/approved-adverts">
 						<Typography
 							variant="body2"
 							component="div"
 							sx={{ textTransform: "capitalize" }}
 						>
-							share link
+							approved adverts
 						</Typography>
 					</MenuItem>
-					<MenuItem component={Link} to="/partner/notifications">
+					<MenuItem component={Link} to="/customer/paid-adverts">
+						<Typography
+							variant="body2"
+							component="div"
+							sx={{ textTransform: "capitalize" }}
+						>
+							paid adverts
+						</Typography>
+					</MenuItem>
+					<MenuItem component={Link} to="/customer/analytics">
+						<Typography
+							variant="body2"
+							component="div"
+							sx={{ textTransform: "capitalize" }}
+						>
+							analytics
+						</Typography>
+					</MenuItem>
+					<MenuItem component={Link} to="/customer/notifications">
 						<Typography
 							variant="body2"
 							component="div"
 							sx={{ textTransform: "capitalize" }}
 						>
 							notifications
+						</Typography>
+					</MenuItem>
+					<MenuItem component={Link} to="/customer/change-password">
+						<Typography
+							variant="body2"
+							component="div"
+							sx={{ textTransform: "capitalize" }}
+						>
+							change password
 						</Typography>
 					</MenuItem>
 					<MenuItem onClick={() => dispatch(logouActionObj[role]())}>

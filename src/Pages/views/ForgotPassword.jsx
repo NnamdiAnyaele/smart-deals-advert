@@ -43,7 +43,7 @@ const ForgotPassword = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [otp, setOtp] = useState("");
 	const [openOtpModal, setOpenOtpModal] = useState(false);
-	const [targetDate, setTargetDate] = useState(addSeconds(60));
+	const [targetDate, setTargetDate] = useState(addSeconds(1800));
 	const [days, hours, minutes, seconds] = useCountdown(targetDate);
 	const [forgotPasswordResponse, setForgotPasswordResponse] = useState({});
 	const [otpRequestLoading, setOtpRequestLoading] = useState(false);
@@ -67,8 +67,7 @@ const ForgotPassword = () => {
 			setForgotPasswordResponse(result?.data);
 			await handleOtpRequest(result?.data);
 			setSubmitStop();
-			setOpenOtpModal(true);
-			setTargetDate(addSeconds(60));
+			setTargetDate(addSeconds(1800));
 		} catch (error) {
 			setSubmitStop();
 			if (error.response) {
@@ -91,7 +90,7 @@ const ForgotPassword = () => {
 
 	const handleOtpRequest = async (userData) => {
 		setOtpRequestLoading(true);
-		setTargetDate(addSeconds(60));
+		setTargetDate(addSeconds(1800));
 		try {
 			const payload = {
 				username: userData?.username,
@@ -103,6 +102,7 @@ const ForgotPassword = () => {
 			};
 			await sendOtp(payload);
 			toast.success("OTP sent to registered email adddress");
+			setOpenOtpModal(true);
 			setOtpRequestLoading(false);
 		} catch (error) {
 			setOtpRequestLoading(false);
@@ -117,7 +117,7 @@ const ForgotPassword = () => {
 	};
 
 	const handleOtpResend = async () => {
-		setTargetDate(addSeconds(60));
+		setTargetDate(addSeconds(1800));
 		try {
 			const payload = {
 				username: forgotPasswordResponse?.username,

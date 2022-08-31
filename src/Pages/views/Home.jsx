@@ -23,7 +23,7 @@ const paddingStyles = {
 	padding: {
 		md: "3rem",
 		sm: "3rem 1rem",
-		xs: "3rem 0",
+		xs: "3rem 1rem",
 	},
 };
 
@@ -76,9 +76,9 @@ const titleStyles = {
 
 const addGroupContainerStyles = {
 	height: "23rem",
-	maxidth: "100%",
+	maxWidth: "644px",
 	display: "flex",
-	justifyContent: "flex-end",
+	justifyContent: { xs: "center", md: "flex-end" },
 };
 
 const titletButtonStyles = {
@@ -159,6 +159,8 @@ const Home = () => {
 									xs: "100%",
 									md: "50%",
 								},
+								display: "flex",
+								justifyContent: { xs: "center", md: "flex-end" },
 							}}
 						>
 							<Box sx={addGroupContainerStyles}>
