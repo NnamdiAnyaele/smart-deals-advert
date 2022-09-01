@@ -167,7 +167,7 @@ const PaidAdvert = () => {
 							variant="contained"
 							sx={buttonStyles}
 							component={Link}
-							to="/create=-advert"
+							to="/customer/new-advert"
 						>
 							create new advert
 						</Button>

@@ -18,6 +18,7 @@ import Dashboard from "../views/Dashboard";
 import AdvertHistory from "../views/AdvertHistory";
 import ApprovedAdverts from "../views/ApprovedAdverts";
 import PaidAdvert from "../views/PaidAdvert";
+import NewAdvert from "../views/NewAdvert";
 
 const BaseRoute = () => {
 	const { user, role } = useSelector((state) => state.auth);
@@ -82,6 +83,14 @@ const BaseRoute = () => {
 						element={
 							<ProtectedRoute isAllowed={isAllowed}>
 								<Notifications />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="new-advert"
+						element={
+							<ProtectedRoute isAllowed={isAllowed}>
+								<NewAdvert />
 							</ProtectedRoute>
 						}
 					/>

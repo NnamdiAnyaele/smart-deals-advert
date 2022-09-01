@@ -20,7 +20,7 @@ const advertCardStyles = {
 };
 
 const flexContainer = {
-	width: "17.5rem",
+	width: "100%",
 	display: "flex",
 	justifyContent: "flex-end",
 	mb: "0.5rem",

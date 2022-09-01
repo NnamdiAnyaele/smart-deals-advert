@@ -303,20 +303,22 @@ export default function ElevateAppBar({
 											sx={{
 												height: "2.25rem",
 												width: "2.25rem",
-												backgroundColor: "#594E4E",
+												backgroundColor: user?.partnerLogo ? "#fff" : "#594E4E",
 												borderRadius: "50%",
 												display: "flex",
 												justifyContent: "center",
 												alignItems: "center",
 												mr: "0.5rem",
+												border: "1px solid #594E4E",
 											}}
 										>
 											<Box sx={{ height: "1.125rem", width: "0.75rem" }}>
 												<img
-													src={userIcon}
+													src={user?.partnerLogo ? user?.partnerLogo : userIcon}
 													height="100%"
 													width="100%"
-													alt="user icon"
+													alt="avatar"
+													sx={{ objectFit: "cover" }}
 												/>
 											</Box>
 										</Box>
