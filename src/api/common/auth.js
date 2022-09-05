@@ -63,3 +63,12 @@ export async function checkEmailAddress(payload) {
 	});
 	return data;
 }
+
+export function getCurrentUser(userKey) {
+	try {
+		const user = localStorage.getItem(userKey);
+		return JSON.parse(user);
+	} catch (ex) {
+		return {};
+	}
+}

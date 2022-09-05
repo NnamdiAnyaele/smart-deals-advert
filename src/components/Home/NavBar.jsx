@@ -312,13 +312,13 @@ export default function ElevateAppBar({
 												border: "1px solid #594E4E",
 											}}
 										>
-											<Box sx={{ height: "1.125rem", width: "0.75rem" }}>
+											<Box sx={{ height: "1.3rem", width: "1.3rem" }}>
 												<img
 													src={user?.partnerLogo ? user?.partnerLogo : userIcon}
 													height="100%"
 													width="100%"
 													alt="avatar"
-													sx={{ objectFit: "cover" }}
+													sx={{ objectFit: "cover", borderRadius: "50%" }}
 												/>
 											</Box>
 										</Box>

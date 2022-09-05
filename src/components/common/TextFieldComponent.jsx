@@ -12,7 +12,6 @@ const TextFieldComponent = ({
 	error = null,
 	helperText = null,
 }) => {
-	// console.log({ name, error, helperText, value });
 	return (
 		<Box
 			sx={{

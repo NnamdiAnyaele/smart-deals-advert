@@ -35,9 +35,11 @@ const profileAvatarContainerStyles = {
 	width: "10rem",
 	height: "10rem",
 	mr: "1rem",
+	display: "flex",
+	alignItems: "center",
 };
 
-const profileImageStyles = { objectFit: "cover" };
+const profileImageStyles = { objectFit: "cover", borderRadius: "50%" };
 
 const profileIconStyles = {
 	fontSize: "10rem",
@@ -142,7 +144,7 @@ const Dashboard = () => {
 						<Box sx={flexContainer}>
 							<IconButton
 								component={Link}
-								to="/customer/edit-profile"
+								to="/customer/update-profile"
 								color="secondary"
 							>
 								<EditIcon />
@@ -164,8 +166,8 @@ const Dashboard = () => {
 										src={user?.partnerLogo}
 										alt="avatar"
 										width="100%"
-										height="auto"
-										sx={profileImageStyles}
+										height="100%"
+										style={profileImageStyles}
 									/>
 								) : (
 									<AccountCircleIcon color="primary" sx={profileIconStyles} />

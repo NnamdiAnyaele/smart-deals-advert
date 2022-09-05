@@ -24,6 +24,8 @@ const drawerWidth = 230;
 
 const DEVICETYPE = "WEB";
 
+const PROFILEPHOTOKEY = "partnerLogo";
+
 export {
 	specialCharacterCheck,
 	digitCheck,
@@ -35,4 +37,5 @@ export {
 	currencySymbolMap,
 	drawerWidth,
 	DEVICETYPE,
+	PROFILEPHOTOKEY,
 };

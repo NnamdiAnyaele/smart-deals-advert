@@ -5,12 +5,16 @@ export async function getCountry() {
 	return data;
 }
 
-export async function getState(countryID) {
-	const { data } = await request.get(`/api/getState?countryID=${countryID}`);
+export async function getState(countryID, region) {
+	const { data } = await request.get(
+		`/api/getState?countryID=${countryID}&region=${region}`
+	);
 	return data;
 }
 
-export async function getCity(stateId) {
-	const { data } = await request.get(`/api/getCity?stateID=${stateId}`);
+export async function getCity(stateId, region) {
+	const { data } = await request.get(
+		`/api/getCity?stateID=${stateId}&region=${region}`
+	);
 	return data;
 }

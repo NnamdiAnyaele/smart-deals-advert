@@ -3,7 +3,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../api/httpService";
 import { isEmpty } from "../utils/helpers/functions";
-import { ROLES, TOKENKEY, USERKEY } from "../utils/constants";
+import { ROLES, TOKENKEY, USERKEY, PROFILEPHOTOKEY } from "../utils/constants";
 
 export const login = createAsyncThunk(
 	"auth/login",
@@ -11,7 +11,6 @@ export const login = createAsyncThunk(
 	async (payload, { rejectWithValue }) => {
 		try {
 			const response = await axios.post("/api/login", payload);
-			console.log({ dat: response.data });
 			localStorage.setItem(TOKENKEY, response.data.data.accessToken);
 			localStorage.setItem(USERKEY, JSON.stringify(response.data.data));
 			return response.data;
@@ -83,6 +82,9 @@ const authSlice = createSlice({
 		setRole(state, action) {
 			state.role = action.payload;
 		},
+		updateProfilePhoto(state, action) {
+			state.user[PROFILEPHOTOKEY] = action.payload;
+		},
 	},
 	extraReducers: {
 		[login.pending]: (state, action) => {
@@ -105,7 +107,13 @@ const authSlice = createSlice({
 	},
 });
 
-export const { logout, loginSuccess, setRegion, setBizfrom, setRole } =
-	authSlice.actions;
+export const {
+	logout,
+	loginSuccess,
+	setRegion,
+	setBizfrom,
+	setRole,
+	updateProfilePhoto,
+} = authSlice.actions;
 
 export default authSlice.reducer;

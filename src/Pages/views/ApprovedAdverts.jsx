@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 import AdvertCard from "../../components/common/AdvertCard";
 import ViewAdvertModal from "../../components/common/ViewAdvertModal";
@@ -32,10 +34,12 @@ const centerItem = {
 	justifyContent: "center",
 };
 
-const size = 9;
+const advertsContainerStyles = { maxWidth: { lg: "58.5rem", sm: "39rem" } };
 
 const ApprovedAdverts = () => {
 	const { user } = useSelector((state) => state.auth);
+	const theme = useTheme();
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
 	// const queryClient = useQueryClient();
 
 	const [viewModalOpen, setViewModalOpen] = useState(false);
@@ -43,6 +47,7 @@ const ApprovedAdverts = () => {
 	// const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [displayedAdverts, setDisplayedAdverts] = useState([]);
+	const [size, setSize] = useState(9);
 
 	const {
 		data: advertsData = [],
@@ -84,6 +89,12 @@ const ApprovedAdverts = () => {
 			setDisplayedAdverts(sliceData);
 		}
 	}, [currentPage, advertsData, advertsLoading]);
+
+	useEffect(() => {
+		if (isSmallScreen) {
+			setSize(8);
+		}
+	}, [isSmallScreen]);
 
 	// const { mutate: deleteAdvert, isLoading: deleteAdvertLoading } = useMutation(
 	// 	"delete-expired-advert",
@@ -167,39 +178,41 @@ const ApprovedAdverts = () => {
 
 			{advertsLoading && <Loader />}
 
-			{!advertsLoading && (
-				<>
-					{/* paid adverts */}
-					<Box>
-						<Grid container spacing={4}>
-							{displayedAdverts.map((advert) => (
-								<Grid
-									item
-									xs={12}
-									sm={6}
-									lg={4}
-									sx={centerItem}
-									key={advert.id}
-								>
-									<AdvertCard
-										image={advert?.file}
-										setSelectedItem={() => setSelectedItem(advert)}
-										handleView={() => setViewModalOpen(true)}
-										// handleDelete={() => setDeleteModalOpen(true)}
-									/>
-								</Grid>
-							))}
-						</Grid>
-						<PaginationBox
-							count={Math.ceil(advertsData?.length / size) || 0}
-							page={currentPage}
-							handlePageChange={(event, value) => {
-								setCurrentPage(value);
-							}}
-						/>
-					</Box>
-				</>
-			)}
+			<Box sx={advertsContainerStyles}>
+				{!advertsLoading && (
+					<>
+						{/* paid adverts */}
+						<Box>
+							<Grid container spacing={4}>
+								{displayedAdverts.map((advert) => (
+									<Grid
+										item
+										xs={12}
+										sm={6}
+										lg={4}
+										sx={centerItem}
+										key={advert.id}
+									>
+										<AdvertCard
+											image={advert?.file}
+											setSelectedItem={() => setSelectedItem(advert)}
+											handleView={() => setViewModalOpen(true)}
+											// handleDelete={() => setDeleteModalOpen(true)}
+										/>
+									</Grid>
+								))}
+							</Grid>
+							<PaginationBox
+								count={Math.ceil(advertsData?.length / size) || 0}
+								page={currentPage}
+								handlePageChange={(event, value) => {
+									setCurrentPage(value);
+								}}
+							/>
+						</Box>
+					</>
+				)}
+			</Box>
 
 			<ViewAdvertModal
 				open={viewModalOpen}

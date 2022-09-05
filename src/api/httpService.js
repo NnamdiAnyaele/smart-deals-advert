@@ -1,8 +1,11 @@
 import axios from "axios";
 import { TOKENKEY } from "../utils/constants";
+import config from "../config";
+
+const { apiHost } = config().secrets;
 
 const customAxios = axios.create({
-	baseURL: "https://core.smartdeals.com.ng",
+	baseURL: `${apiHost}`,
 	timeout: 30000,
 });
 

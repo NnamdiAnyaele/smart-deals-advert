@@ -7,6 +7,8 @@ const NumberTextField = ({
 	value,
 	onChange,
 	variant = "outlined",
+	error = null,
+	helperText = null,
 }) => {
 	return (
 		<TextField
@@ -19,6 +21,8 @@ const NumberTextField = ({
 			name={name}
 			onChange={onChange}
 			fullWidth
+			error={error}
+			helperText={helperText}
 		/>
 	);
 };

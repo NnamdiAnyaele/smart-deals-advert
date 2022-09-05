@@ -90,7 +90,6 @@ const LoginSignup = () => {
 			toast.success(result.message);
 			window.location = userRedirectLinks[role || localStoredRole];
 		} catch (error) {
-			console.log(error);
 			stopSubmitLoading();
 			toast.error(error);
 		}
