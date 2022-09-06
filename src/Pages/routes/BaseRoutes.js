@@ -20,6 +20,7 @@ import ApprovedAdverts from "../views/ApprovedAdverts";
 import PaidAdvert from "../views/PaidAdvert";
 import NewAdvert from "../views/NewAdvert";
 import ProfileUpdate from "../views/ProfileUpdate";
+import AdvertCallback from "../views/AdvertCallback";
 
 const BaseRoute = () => {
 	const { user, role } = useSelector((state) => state.auth);
@@ -104,6 +105,14 @@ const BaseRoute = () => {
 						}
 					/>
 				</Route>
+				<Route
+					path="/payment/callback/:advertID/:channel"
+					element={
+						<ProtectedRoute isAllowed={isAllowed}>
+							<AdvertCallback />
+						</ProtectedRoute>
+					}
+				/>
 
 				<Route path="*" element={<NotFound />} />
 			</Routes>

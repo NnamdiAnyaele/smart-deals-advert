@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 // import MuiLink from "@mui/material/Link";
@@ -8,13 +7,7 @@ import Typography from "@mui/material/Typography";
 // import AccountCircle from "@mui/icons-material/AccountCircle";
 // import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-import { logout as adminLogout } from "../../slices/authSlice";
-
 import { ROLES } from "../../utils/constants";
-
-const logouActionObj = {
-	[ROLES.ADMIN]: adminLogout,
-};
 
 const MobileNavLinks = ({
 	// handleProfileClick,
@@ -25,8 +18,6 @@ const MobileNavLinks = ({
 	logo,
 	toggleFlag,
 }) => {
-	const dispatch = useDispatch();
-
 	return (
 		<div style={{ textAlign: "right" }}>
 			{role?.toLowerCase() !== ROLES.ADMIN && (
@@ -132,7 +123,7 @@ const MobileNavLinks = ({
 									change password
 								</Typography>
 							</MenuItem>
-							<MenuItem onClick={() => dispatch(logouActionObj[role]())}>
+							<MenuItem component={Link} to="/logout">
 								logout
 							</MenuItem>
 						</>
@@ -266,7 +257,7 @@ const MobileNavLinks = ({
 									Activity Log
 								</Typography>
 							</MenuItem>
-							<MenuItem onClick={() => dispatch(logouActionObj[role]())}>
+							<MenuItem component={Link} to="/logout">
 								<Typography
 									variant="body2"
 									component="div"

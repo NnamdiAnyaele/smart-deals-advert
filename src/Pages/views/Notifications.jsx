@@ -56,7 +56,7 @@ const Notifications = () => {
 		async () => fetchNotifications(user.username, user.region, bizFrom, role),
 		{
 			select: (data) => data.data,
-			staleTime: Infinity,
+			staleTime: 4 * 60 * 1000,
 			enabled:
 				Boolean(user.region) &&
 				Boolean(user.username) &&

@@ -26,6 +26,13 @@ const DEVICETYPE = "WEB";
 
 const PROFILEPHOTOKEY = "partnerLogo";
 
+const PAYMENTOPTIONS = {
+	CARD: "card",
+	USSD: "ussd",
+	BANK: "bank",
+	BANKTRANSFER: "bank_transfer",
+};
+
 export {
 	specialCharacterCheck,
 	digitCheck,
@@ -38,4 +45,5 @@ export {
 	drawerWidth,
 	DEVICETYPE,
 	PROFILEPHOTOKEY,
+	PAYMENTOPTIONS,
 };

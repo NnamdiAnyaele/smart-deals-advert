@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
@@ -84,6 +84,7 @@ const advertPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const NewAdvert = () => {
 	const { user } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	const [advertImage, setAdvertImage] = useState({
 		file: "",
@@ -119,6 +120,10 @@ const NewAdvert = () => {
 				} else {
 					toast.error("Error", error.message);
 				}
+			},
+			onSettled: () => {
+				queryClient.invalidateQueries("fetch-adverts");
+				queryClient.invalidateQueries("fetch-approved-adverts");
 			},
 		}
 	);

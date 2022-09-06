@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Card from "@mui/material/Card";
-import IconButton from "@mui/material/IconButton";
+// import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
@@ -17,14 +17,15 @@ const advertCardStyles = {
 	height: "17.5rem",
 	maxWidth: "17.5rem",
 	maxHeight: "17.5rem",
+	cursor: "pointer",
 };
 
-const flexContainer = {
-	width: "100%",
-	display: "flex",
-	justifyContent: "flex-end",
-	mb: "0.5rem",
-};
+// const flexContainer = {
+// 	width: "100%",
+// 	display: "flex",
+// 	justifyContent: "flex-end",
+// 	mb: "0.5rem",
+// };
 
 const AdvertCard = ({
 	image,
@@ -36,17 +37,30 @@ const AdvertCard = ({
 }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
+	// const handleClick = (event) => {
+	// 	setAnchorEl(event.currentTarget);
+	// };
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
 	return (
 		<Box>
-			<Card>
-				<Box sx={flexContainer}>
+			<Card
+				elevation={2}
+				sx={{
+					"&:hover": {
+						boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
+						// rgba(0, 0, 0, 0.24) 0px 3px 8px
+					},
+				}}
+				onClick={() => {
+					setSelectedItem();
+					handleView();
+					handleClose();
+				}}
+			>
+				{/* <Box sx={flexContainer}>
 					<IconButton
 						onClick={(event) => {
 							setSelectedItem();
@@ -55,7 +69,7 @@ const AdvertCard = ({
 					>
 						<MoreVertIcon />
 					</IconButton>
-				</Box>
+				</Box> */}
 				<Box sx={advertCardStyles}>
 					<img src={image} alt="advert" width="100%" height="auto" />
 				</Box>

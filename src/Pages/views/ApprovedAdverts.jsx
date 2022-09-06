@@ -15,6 +15,7 @@ import ViewAdvertModal from "../../components/common/ViewAdvertModal";
 // import DeleteModal from "../../components/common/DeleteModal";
 import Loader from "../../components/common/Loader";
 import PaginationBox from "../../components/common/PaginationBox";
+import PaymentModal from "../../components/common/PaymentModal";
 import { fetchAdvertsForPayment } from "../../api/advert";
 
 const paddingStyles = {
@@ -48,6 +49,7 @@ const ApprovedAdverts = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [displayedAdverts, setDisplayedAdverts] = useState([]);
 	const [size, setSize] = useState(9);
+	const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
 	const {
 		data: advertsData = [],
@@ -218,6 +220,16 @@ const ApprovedAdverts = () => {
 				open={viewModalOpen}
 				handleClose={() => setViewModalOpen(false)}
 				data={selectedItem}
+				openPaymentModal={() => {
+					setPaymentModalOpen(true);
+					setViewModalOpen(false);
+				}}
+			/>
+
+			<PaymentModal
+				open={paymentModalOpen}
+				handleClose={() => setPaymentModalOpen(false)}
+				advert={selectedItem}
 			/>
 
 			{/* <DeleteModal

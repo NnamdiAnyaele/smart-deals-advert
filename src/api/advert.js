@@ -29,3 +29,17 @@ export async function placeAdvert(payload) {
 	const { data } = await request.post(url, payload);
 	return data;
 }
+
+export async function advertPaid(payload) {
+	const url = "/api/customer/advertPaid";
+	const { data } = await request.post(url, payload);
+	return data;
+}
+
+export async function fetchAdvertImageByID(payload) {
+	const url = "/api/customer/fetchAdvertImageByID";
+	const { data } = await request.get(url, {
+		params: payload,
+	});
+	return data;
+}

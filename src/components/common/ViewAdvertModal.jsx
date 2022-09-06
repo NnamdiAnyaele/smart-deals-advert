@@ -23,14 +23,26 @@ const flexContainer = {
 	mb: "1rem",
 };
 
+const buttonContainerStyles = {
+	display: "flex",
+	justifyContent: "center",
+};
+
+const buttonStyles = {
+	textTransform: "capitalize",
+	width: "18rem",
+};
+
 export default function ResponsiveDialog({
 	open,
 	handleClose,
 	title,
 	subtitle,
 	data,
+	openPaymentModal,
 }) {
 	const { user } = useSelector((state) => state.auth);
+
 	return (
 		<div>
 			<Dialog
@@ -264,6 +276,19 @@ export default function ResponsiveDialog({
 										Expiry Date: {dateFormatter(data?.expiryDate) || "N/A"}
 									</Typography>
 								</Box>
+
+								{Number(data?.status) === 1 && Number(data?.paid) === 0 && (
+									<Box sx={buttonContainerStyles}>
+										<Button
+											sx={buttonStyles}
+											variant="contained"
+											color="primary"
+											onClick={openPaymentModal}
+										>
+											make payment
+										</Button>
+									</Box>
+								)}
 							</Box>
 						</Box>
 					</Box>

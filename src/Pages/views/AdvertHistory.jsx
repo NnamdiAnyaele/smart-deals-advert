@@ -17,6 +17,7 @@ import ViewAdvertModal from "../../components/common/ViewAdvertModal";
 // import DeleteModal from "../../components/common/DeleteModal";
 import Loader from "../../components/common/Loader";
 import PaginationBox from "../../components/common/PaginationBox";
+import PaymentModal from "../../components/common/PaymentModal";
 import {
 	fetchMyAdvertImages,
 	// deleteExpiredAdvertImages,
@@ -75,6 +76,7 @@ const AdvertHistory = () => {
 	const [displayedApprovedUnpaidAdverts, setDisplayedApprovedUnpaidAdverts] =
 		useState([]);
 	const [size, setSize] = useState(9);
+	const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
 	const {
 		data: advertsData = [],
@@ -82,13 +84,13 @@ const AdvertHistory = () => {
 		isError: advertsError,
 		error: advertsErrorMessage,
 	} = useQuery(
-		["fetch-adverts", { username: user.username, region: user.region }],
+		["fetch-adverts", { username: user?.username, region: user?.region }],
 		async () =>
-			fetchMyAdvertImages({ username: user.username, region: user.region }),
+			fetchMyAdvertImages({ username: user?.username, region: user?.region }),
 		{
 			select: (data) => data.data,
 			staleTime: 4 * 60 * 1000,
-			enabled: Boolean(user.username) && Boolean(user.region),
+			enabled: Boolean(user?.username) && Boolean(user?.region),
 		}
 	);
 
@@ -455,6 +457,16 @@ const AdvertHistory = () => {
 				open={viewModalOpen}
 				handleClose={() => setViewModalOpen(false)}
 				data={selectedItem}
+				openPaymentModal={() => {
+					setPaymentModalOpen(true);
+					setViewModalOpen(false);
+				}}
+			/>
+
+			<PaymentModal
+				open={paymentModalOpen}
+				handleClose={() => setPaymentModalOpen(false)}
+				advert={selectedItem}
 			/>
 
 			{/* <DeleteModal

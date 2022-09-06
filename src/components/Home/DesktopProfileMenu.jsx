@@ -1,19 +1,11 @@
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Typography from "@mui/material/Typography";
 
-import { logout as adminLogout } from "../../slices/authSlice";
 import { ROLES } from "../../utils/constants";
 
-const logouActionObj = {
-	[ROLES.ADMIN]: adminLogout,
-};
-
 const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
-	const dispatch = useDispatch();
-
 	return (
 		<div>
 			{role === ROLES.CUSTOMER && (
@@ -90,7 +82,7 @@ const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
 							change password
 						</Typography>
 					</MenuItem>
-					<MenuItem onClick={() => dispatch(logouActionObj[role]())}>
+					<MenuItem component={Link} to="/logout">
 						logout
 					</MenuItem>
 				</Menu>
