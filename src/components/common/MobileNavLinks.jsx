@@ -78,7 +78,7 @@ const MobileNavLinks = ({
 									advert history
 								</Typography>
 							</MenuItem>
-							<MenuItem component={Link} to="/customer/approved-adverts">
+							{/* <MenuItem component={Link} to="/customer/approved-adverts">
 								<Typography
 									variant="body2"
 									component="div"
@@ -95,7 +95,7 @@ const MobileNavLinks = ({
 								>
 									paid adverts
 								</Typography>
-							</MenuItem>
+							</MenuItem> */}
 							<MenuItem component={Link} to="/customer/analytics">
 								<Typography
 									variant="body2"

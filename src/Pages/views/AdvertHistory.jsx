@@ -216,7 +216,7 @@ const AdvertHistory = () => {
 	// 		ID: selectedItem.id,
 	// 		username: selectedItem.username,
 	// 		region: user.region,
-	// 		admin: user.fullName,
+	// 		admin: user.fullName || "NA",
 	// 		position: selectedItem.position,
 	// 	};
 	// 	await deleteAdvert(payload);

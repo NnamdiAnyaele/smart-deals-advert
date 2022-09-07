@@ -16,8 +16,8 @@ import HowItWorks from "../views/HowItWorks";
 import CustomerLayout from "../../components/Customer/CustomerLayout";
 import Dashboard from "../views/Dashboard";
 import AdvertHistory from "../views/AdvertHistory";
-import ApprovedAdverts from "../views/ApprovedAdverts";
-import PaidAdvert from "../views/PaidAdvert";
+// import ApprovedAdverts from "../views/ApprovedAdverts";
+// import PaidAdvert from "../views/PaidAdvert";
 import NewAdvert from "../views/NewAdvert";
 import ProfileUpdate from "../views/ProfileUpdate";
 import AdvertCallback from "../views/AdvertCallback";
@@ -56,7 +56,7 @@ const BaseRoute = () => {
 							</ProtectedRoute>
 						}
 					/>
-					<Route
+					{/* <Route
 						path="approved-adverts"
 						element={
 							<ProtectedRoute isAllowed={isAllowed}>
@@ -71,7 +71,7 @@ const BaseRoute = () => {
 								<PaidAdvert />
 							</ProtectedRoute>
 						}
-					/>
+					/> */}
 					<Route
 						path="change-password"
 						element={

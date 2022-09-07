@@ -11,8 +11,8 @@ import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 import GridViewIcon from "@mui/icons-material/GridView";
 import HistoryIcon from "@mui/icons-material/History";
 import TimelineIcon from "@mui/icons-material/Timeline";
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
-import PaidIcon from "@mui/icons-material/Paid";
+// import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+// import PaidIcon from "@mui/icons-material/Paid";
 
 import DrawerItem from "../common/DrawerItem";
 import { drawerWidth } from "../../utils/constants";
@@ -151,7 +151,7 @@ const AdminDrawer = ({ open, setOpen }) => {
 			<Divider />
 			<List>
 				<DrawerItem
-					text="My Account"
+					text="Dashboard"
 					open={open}
 					Icon={GridViewIcon}
 					linkTo="/customer/dashboard"
@@ -172,7 +172,7 @@ const AdminDrawer = ({ open, setOpen }) => {
 					value={value}
 					itemValue={1}
 				/>
-				<DrawerItem
+				{/* <DrawerItem
 					text="Approved Adverts"
 					open={open}
 					Icon={AssignmentTurnedInIcon}
@@ -193,7 +193,7 @@ const AdminDrawer = ({ open, setOpen }) => {
 					itemOnHover={itemOnHover}
 					value={value}
 					itemValue={7}
-				/>
+				/> */}
 				<DrawerItem
 					text="Analytics"
 					open={open}

@@ -9,6 +9,7 @@ const NumberTextField = ({
 	variant = "outlined",
 	error = null,
 	helperText = null,
+	width = "100%",
 }) => {
 	return (
 		<TextField
@@ -23,6 +24,7 @@ const NumberTextField = ({
 			fullWidth
 			error={error}
 			helperText={helperText}
+			sx={{ width }}
 		/>
 	);
 };

@@ -50,7 +50,8 @@ const AdvertCard = ({
 				elevation={2}
 				sx={{
 					"&:hover": {
-						boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
+						boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+						// boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
 						// rgba(0, 0, 0, 0.24) 0px 3px 8px
 					},
 				}}

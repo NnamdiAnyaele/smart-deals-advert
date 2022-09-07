@@ -47,6 +47,7 @@ const profileIconStyles = {
 
 const buttonStyles = {
 	textTransform: "capitalize",
+	mb: "2rem",
 };
 
 const userDataContainerStyles = {
@@ -200,7 +201,7 @@ const Dashboard = () => {
 							display: "flex",
 							alignItems: "center",
 							justifyContent: "space-between",
-							mb: "2rem",
+							mb: "1rem",
 						}}
 					>
 						<Typography
@@ -235,6 +236,18 @@ const Dashboard = () => {
 								</Button>
 							</Box>
 						</Box>
+					</Box>
+
+					<Box>
+						<Button
+							variant="contained"
+							sx={buttonStyles}
+							color="primary"
+							component={Link}
+							to="/customer/new-advert"
+						>
+							create new advert
+						</Button>
 					</Box>
 
 					{advertsLoading && <Loader />}
@@ -274,18 +287,6 @@ const Dashboard = () => {
 										))}
 									</Grid>
 								)}
-							</Box>
-
-							<Box>
-								<Button
-									variant="contained"
-									sx={buttonStyles}
-									color="primary"
-									component={Link}
-									to="/customer/new-advert"
-								>
-									create new advert
-								</Button>
 							</Box>
 						</Box>
 					)}

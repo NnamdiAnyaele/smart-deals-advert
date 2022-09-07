@@ -94,7 +94,7 @@ const ForgotPassword = () => {
 		try {
 			const payload = {
 				username: userData?.username,
-				fullName: userData?.fullName,
+				fullName: userData?.fullName || "NA",
 				emailAddress: userData?.emailAddress,
 				phoneNumber: userData?.phoneNumber,
 				region: region.region,
@@ -121,7 +121,7 @@ const ForgotPassword = () => {
 		try {
 			const payload = {
 				username: forgotPasswordResponse?.username,
-				fullName: forgotPasswordResponse?.fullName,
+				fullName: forgotPasswordResponse?.fullName || "NA",
 				emailAddress: forgotPasswordResponse?.emailAddress,
 				phoneNumber: forgotPasswordResponse?.phoneNumber,
 				region: region.region,

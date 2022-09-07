@@ -37,7 +37,7 @@ const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
 							advert history
 						</Typography>
 					</MenuItem>
-					<MenuItem component={Link} to="/customer/approved-adverts">
+					{/* <MenuItem component={Link} to="/customer/approved-adverts">
 						<Typography
 							variant="body2"
 							component="div"
@@ -54,7 +54,7 @@ const DesktopProfileMenu = ({ anchorEl, open, handleClose, role }) => {
 						>
 							paid adverts
 						</Typography>
-					</MenuItem>
+					</MenuItem> */}
 					<MenuItem component={Link} to="/customer/analytics">
 						<Typography
 							variant="body2"

@@ -130,7 +130,7 @@ export default function PaymentModal({ open, handleClose, advert }) {
 	const handleFetchPaymentTransactionDetails = async () => {
 		const payload = {
 			username: user?.username,
-			fullName: user?.fullName,
+			fullName: user?.fullName || "NA",
 			emailAddress: user?.emailAddress,
 			phoneNumber: user?.phoneNumber,
 			amount: advert?.amount,
@@ -173,7 +173,7 @@ export default function PaymentModal({ open, handleClose, advert }) {
 	const handleFetchZenithPaymentTransactionDetails = async () => {
 		const payload = {
 			username: user?.username,
-			fullName: user?.fullName,
+			fullName: user?.fullName || "NA",
 			emailAddress: user?.emailAddress,
 			phoneNumber: user?.phoneNumber,
 			amount: advert?.amount,

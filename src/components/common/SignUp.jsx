@@ -18,7 +18,7 @@ import {
 	digitCheck,
 	uppercaseCheck,
 } from "../../utils/constants";
-import { checkUsername, checkEmailAddress } from "../../api/common/auth";
+import { checkUsername } from "../../api/common/auth";
 
 const validationSchema = yup.object({
 	username: yup
@@ -56,7 +56,6 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 	const { role, region } = useSelector((state) => state.auth);
 
 	const [existUsernameMessage, setExistUsernameMessage] = useState("");
-	const [existEmailMessage, setExistEmailMessage] = useState("");
 
 	const formik = useFormik({
 		initialValues: signUpFields,
@@ -95,44 +94,11 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 		[role]
 	);
 
-	const checkEmailExist = useCallback(
-		debounce(async (query) => {
-			try {
-				if (role && region) {
-					const payload = {
-						emailAddress: query,
-						region: region.region,
-						accountType: role,
-					};
-					await checkEmailAddress(payload);
-					setExistEmailMessage("");
-				}
-			} catch (error) {
-				if (error.response) {
-					setExistEmailMessage(error.response?.data?.message);
-				} else if (error.request) {
-					toast.error("Internal Server Error");
-				} else {
-					toast.error("Error", error.message);
-				}
-			}
-		}, 500),
-		[role]
-	);
-
 	useEffect(() => {
 		if (formik.values.username && !formik.errors.username) {
 			checkUsernameExist(formik.values.username);
 		}
-		if (formik.values.email && !formik.errors.email) {
-			checkEmailExist(formik.values.email);
-		}
-	}, [
-		formik.values.username,
-		formik.errors.username,
-		formik.values.email,
-		formik.errors.email,
-	]);
+	}, [formik.values.username, formik.errors.username]);
 
 	return (
 		<div>
@@ -203,14 +169,8 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 								id="email"
 								name="email"
 								required
-								error={
-									Boolean(existEmailMessage) ||
-									(formik.touched.email && Boolean(formik.errors.email))
-								}
-								helperText={
-									existEmailMessage ||
-									(formik.touched.email && formik.errors.email)
-								}
+								error={formik.touched.email && Boolean(formik.errors.email)}
+								helperText={formik.touched.email && formik.errors.email}
 							/>
 						</Box>
 						<Box sx={{ mb: "1rem" }}>
@@ -267,11 +227,7 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 						color="primary"
 						fullWidth
 						sx={{ padding: "1rem" }}
-						disabled={
-							formik.isSubmitting ||
-							Boolean(existUsernameMessage) ||
-							Boolean(existEmailMessage)
-						}
+						disabled={formik.isSubmitting || Boolean(existUsernameMessage)}
 					>
 						{formik.isSubmitting ? (
 							<CircularProgress size="1.5rem" />

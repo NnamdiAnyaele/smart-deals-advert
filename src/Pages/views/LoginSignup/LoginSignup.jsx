@@ -59,10 +59,18 @@ const userRedirectLinks = {
 const LoginSignup = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
-	const { bizFrom, region, role } = useSelector((state) => state.auth);
+	const { bizFrom, region, role, isAuthenticated } = useSelector(
+		(state) => state.auth
+	);
 	const navigate = useNavigate();
 
 	const [tab, setTab] = useState(SIGNUPTABS.SIGNUP);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate(userRedirectLinks[role]);
+		}
+	}, [isAuthenticated]);
 
 	useEffect(() => {
 		if (location.pathname === "/login") {
