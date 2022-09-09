@@ -6,7 +6,6 @@ import Toolbar from "@mui/material/Toolbar";
 
 import NavBar from "../../components/Home/NavBar";
 import WhyUse from "../../components/Home/WhyUse";
-import TopMerchants from "../../components/Home/TopMerchants";
 import Steps from "../../components/Home/Steps";
 import Footer from "../../components/common/Footer";
 import addGroup from "../../assets/images/add-group.png";
@@ -14,6 +13,10 @@ import whyUseLogo1 from "../../assets/icons/why-use-logo-1.png";
 import whyUseLogo2 from "../../assets/icons/why-use-logo-2.png";
 import whyUseLogo3 from "../../assets/icons/why-use-logo-3.png";
 import whyUseLogo4 from "../../assets/icons/why-use-logo-4.png";
+
+const style = {
+	minHeight: "100vh",
+};
 
 const mainContainerStyles = {
 	backgroundColor: "#fff",
@@ -83,6 +86,8 @@ const addGroupContainerStyles = {
 
 const titletButtonStyles = {
 	textTransform: "capitalize",
+	marginleft: "1rem",
+	whiteSpace: "nowrap",
 };
 
 const whyUseBackgroundStyles = {
@@ -126,22 +131,15 @@ const whyUseContainerStyles = {
 
 const Home = () => {
 	return (
-		<Box>
+		<Box sx={style}>
 			<NavBar />
 			<Toolbar />
 			<Box sx={mainContainerStyles}>
 				<Box sx={paddingStyles}>
 					<Box sx={headerContainerStyles}>
 						<Box sx={pageTitleContainerStyles}>
-							<Typography
-								variant="h2"
-								component="h1"
-								gutterBottom
-								sx={titleStyles}
-							>
-								Have something to sell, show the right people
-							</Typography>
-							<Box>
+							<Typography variant="h2" component="h1" sx={titleStyles}>
+								Have a product or service to sell?{" "}
 								<Button
 									variant="contained"
 									color="primary"
@@ -151,7 +149,7 @@ const Home = () => {
 								>
 									get started
 								</Button>
-							</Box>
+							</Typography>
 						</Box>
 						<Box
 							sx={{
@@ -196,10 +194,6 @@ const Home = () => {
 							</Box>
 						</Box>
 					</Box>
-				</Box>
-
-				<Box sx={paddingStyles}>
-					<TopMerchants />
 				</Box>
 
 				<Box sx={paddingStyles}>

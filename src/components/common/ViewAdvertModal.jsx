@@ -33,6 +33,46 @@ const buttonStyles = {
 	width: "18rem",
 };
 
+const getAvertStatus = (advert) => {
+	const { status, paid } = advert;
+	if (Number(status) === 1 && Number(paid) === 1) {
+		return "active";
+	}
+	if (Number(status) === 1 && Number(paid) === 0) {
+		return "unpaid";
+	}
+	if (Number(status) === 1) {
+		return "approved";
+	}
+	if (Number(status) === 2) {
+		return "rejected";
+	}
+	if (Number(status) === 3) {
+		return "expired";
+	}
+	return "pending";
+};
+
+const getAdvertStatusColor = (advert) => {
+	const advertStatus = getAvertStatus(advert);
+	if (advertStatus === "active") {
+		return "success.main";
+	}
+	if (advertStatus === "unpaid") {
+		return "warning.main";
+	}
+	if (advertStatus === "approved") {
+		return "info.main";
+	}
+	if (advertStatus === "rejected") {
+		return "error.main";
+	}
+	if (advertStatus === "expired") {
+		return "error.main";
+	}
+	return "info.main";
+};
+
 export default function ResponsiveDialog({
 	open,
 	handleClose,
@@ -130,15 +170,15 @@ export default function ResponsiveDialog({
 							<Typography
 								sx={{
 									color: "#fff",
-									backgroundColor:
-										Number(data?.status) === 1 ? "#00C96C" : "#f00",
+									backgroundColor: getAdvertStatusColor(data),
 									p: "0.5rem",
 									borderRadius: "0.5rem",
+									textTransform: "capitalize",
 								}}
 								variant="body2"
 								gutterBottom
 							>
-								{Number(data?.status) === 1 ? "Activated" : "Not Activated"}
+								{getAvertStatus(data)}
 							</Typography>
 						</Box>
 						<Box
@@ -190,70 +230,7 @@ export default function ResponsiveDialog({
 									{data?.productName}
 								</Typography>
 
-								<Box sx={{ display: "flex" }}>
-									<Box
-										sx={{
-											padding: "0.5rem",
-											"&:hover": { backgroundColor: "#eee" },
-										}}
-									>
-										<Typography sx={{ fontSize: "0.8rem" }} variant="body2">
-											Unit Amount
-										</Typography>
-										<Typography variant="body1">
-											{`${currencySymbolMap[user.region]} ${numberFormatter(
-												data?.unitAmount
-											)}`}
-										</Typography>
-									</Box>
-									<Box
-										sx={{
-											padding: "0.5rem",
-											"&:hover": { backgroundColor: "#eee" },
-										}}
-									>
-										<Typography sx={{ fontSize: "0.8rem" }} variant="body2">
-											Amount
-										</Typography>
-										<Typography
-											variant="body1"
-											color="secondary"
-											sx={{ fontSize: "0.9rem", fontWeight: 700 }}
-										>
-											{`${currencySymbolMap[user.region]} ${numberFormatter(
-												data?.amount
-											)}`}
-										</Typography>
-									</Box>
-									<Box
-										sx={{
-											padding: "0.5rem",
-											"&:hover": { backgroundColor: "#eee" },
-										}}
-									>
-										<Typography sx={{ fontSize: "0.8rem" }} variant="body2">
-											Amount Paid
-										</Typography>
-										<Typography
-											variant="body1"
-											color="primary"
-											sx={{ fontSize: "0.9rem", fontWeight: 700 }}
-										>
-											{`${currencySymbolMap[user.region]} ${numberFormatter(
-												data?.paid
-											)}`}
-										</Typography>
-									</Box>
-								</Box>
-
 								<Box sx={{ p: "0.5rem" }}>
-									<Typography
-										sx={{ color: "#5F5F5F" }}
-										variant="body2"
-										gutterBottom
-									>
-										Date Paid: {dateFormatter(data?.paidDate) || "N/A"}
-									</Typography>
 									<Typography
 										sx={{ color: "#5F5F5F" }}
 										variant="body2"
@@ -261,6 +238,21 @@ export default function ResponsiveDialog({
 									>
 										Position: {data?.position || "N/A"}
 									</Typography>
+
+									<Box
+										sx={{
+											"&:hover": { backgroundColor: "#eee" },
+											mb: "0.2rem",
+										}}
+									>
+										<Typography sx={{ fontSize: "0.8rem" }} variant="body2">
+											Daily Cost:{" "}
+											{`${currencySymbolMap[user.region]} ${numberFormatter(
+												data?.unitAmount
+											)}`}
+										</Typography>
+									</Box>
+
 									<Typography
 										sx={{ color: "#5F5F5F" }}
 										variant="body2"
@@ -268,12 +260,36 @@ export default function ResponsiveDialog({
 									>
 										Days: {data?.days || "N/A"}
 									</Typography>
+
+									<Box
+										sx={{
+											"&:hover": { backgroundColor: "#eee" },
+											mb: "0.3rem",
+										}}
+									>
+										<Typography sx={{ fontSize: "0.8rem" }} variant="body2">
+											Total Cost:{" "}
+											{`${currencySymbolMap[user.region]} ${numberFormatter(
+												data?.amount
+											)}`}
+										</Typography>
+									</Box>
+
 									<Typography
 										sx={{ color: "#5F5F5F" }}
 										variant="body2"
 										gutterBottom
 									>
-										Expiry Date: {dateFormatter(data?.expiryDate) || "N/A"}
+										Activation Date:{" "}
+										{dateFormatter(data?.approvalDate) || "N/A"}
+									</Typography>
+
+									<Typography
+										sx={{ color: "#5F5F5F" }}
+										variant="body2"
+										gutterBottom
+									>
+										Expiration Date: {dateFormatter(data?.expiryDate) || "N/A"}
 									</Typography>
 								</Box>
 

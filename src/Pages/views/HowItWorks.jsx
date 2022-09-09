@@ -6,11 +6,15 @@ import NavBar from "../../components/Home/NavBar";
 import Footer from "../../components/common/Footer";
 import addGroup from "../../assets/images/add-group.png";
 
+const style = {
+	minHeight: "100vh",
+};
+
 const paddingStyles = {
 	padding: {
-		md: "4rem",
-		sm: "4rem 1rem",
-		xs: "4rem 0",
+		md: "1rem 3rem",
+		sm: "1rem 1rem",
+		xs: "1rem 0",
 	},
 };
 
@@ -32,6 +36,7 @@ const headerContainerStyles = {
 		xs: "column",
 		md: "row",
 	},
+	mb: "3rem",
 };
 
 const pageMainContainerStyles = {
@@ -71,7 +76,7 @@ const paragraphStyles = {
 
 const HowItWorks = () => {
 	return (
-		<Box>
+		<Box sx={style}>
 			<NavBar />
 			<Toolbar />
 			<Box sx={paddingStyles}>

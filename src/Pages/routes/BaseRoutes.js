@@ -10,8 +10,8 @@ import LoginSignup from "../views/LoginSignup/LoginSignup";
 import ChangePassword from "../views/ChangePassword";
 import Notifications from "../views/Notifications";
 import ProtectedRoute from "../../components/common/ProtectedRoutes";
-import TermsConditions from "../views/TermsConditions";
-import PrivacyPolicy from "../views/PrivacyPolicy";
+// import TermsConditions from "../views/TermsConditions";
+// import PrivacyPolicy from "../views/PrivacyPolicy";
 import HowItWorks from "../views/HowItWorks";
 import CustomerLayout from "../../components/Customer/CustomerLayout";
 import Dashboard from "../views/Dashboard";
@@ -21,6 +21,7 @@ import AdvertHistory from "../views/AdvertHistory";
 import NewAdvert from "../views/NewAdvert";
 import ProfileUpdate from "../views/ProfileUpdate";
 import AdvertCallback from "../views/AdvertCallback";
+import MyProfile from "../views/MyProfile";
 
 const BaseRoute = () => {
 	const { user, role } = useSelector((state) => state.auth);
@@ -34,8 +35,8 @@ const BaseRoute = () => {
 				<Route path="/forgot-password" element={<ForgotPassword />} />
 				<Route path="/login" element={<LoginSignup />} />
 				<Route path="/signup" element={<LoginSignup />} />
-				<Route path="/terms-and-conditions" element={<TermsConditions />} />
-				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+				{/* <Route path="/terms-and-conditions" element={<TermsConditions />} />
+				<Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
 				<Route path="/how-it-works" element={<HowItWorks />} />
 
 				<Route path="/customer" element={<CustomerLayout />}>
@@ -101,6 +102,14 @@ const BaseRoute = () => {
 						element={
 							<ProtectedRoute isAllowed={isAllowed}>
 								<ProfileUpdate />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="my-profile"
+						element={
+							<ProtectedRoute isAllowed={isAllowed}>
+								<MyProfile />
 							</ProtectedRoute>
 						}
 					/>

@@ -19,6 +19,7 @@ import {
 	uppercaseCheck,
 } from "../../utils/constants";
 import { checkUsername } from "../../api/common/auth";
+import PasswordCheckCompoennt from "./PasswordCheckCompoennt";
 
 const validationSchema = yup.object({
 	username: yup
@@ -220,6 +221,8 @@ const SignUp = ({ signUpFields, handleSubmit }) => {
 							}
 						/>
 					</Box>
+
+					<PasswordCheckCompoennt password={formik.values.password} />
 
 					<Button
 						type="submit"

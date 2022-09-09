@@ -13,6 +13,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import TimelineIcon from "@mui/icons-material/Timeline";
 // import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 // import PaidIcon from "@mui/icons-material/Paid";
+import PersonIcon from "@mui/icons-material/Person";
 
 import DrawerItem from "../common/DrawerItem";
 import { drawerWidth } from "../../utils/constants";
@@ -138,6 +139,9 @@ const AdminDrawer = ({ open, setOpen }) => {
 			) {
 				setValue(7);
 			}
+			if (window.location.pathname === "/customer/my-profile" && value !== 8) {
+				setValue(8);
+			}
 		}
 
 		return () => {
@@ -215,6 +219,17 @@ const AdminDrawer = ({ open, setOpen }) => {
 					itemOnHover={itemOnHover}
 					value={value}
 					itemValue={3}
+				/>
+				<DrawerItem
+					text="My Profile"
+					open={open}
+					Icon={PersonIcon}
+					linkTo="/customer/my-profile"
+					setValue={setValue}
+					setItemOnHover={setItemOnHover}
+					itemOnHover={itemOnHover}
+					value={value}
+					itemValue={8}
 				/>
 				<DrawerItem
 					text="Change Password"

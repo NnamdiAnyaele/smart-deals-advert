@@ -23,9 +23,13 @@ const advertCardStyles = {
 // const flexContainer = {
 // 	width: "100%",
 // 	display: "flex",
-// 	justifyContent: "flex-end",
+// 	justifyContent: "center",
 // 	mb: "0.5rem",
 // };
+
+const titleStyles = {
+	textAlign: "center",
+};
 
 const AdvertCard = ({
 	image,
@@ -34,6 +38,7 @@ const AdvertCard = ({
 	// handleEdit,
 	handleDelete,
 	expiryDate,
+	title,
 }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
@@ -61,16 +66,21 @@ const AdvertCard = ({
 					handleClose();
 				}}
 			>
-				{/* <Box sx={flexContainer}>
-					<IconButton
-						onClick={(event) => {
-							setSelectedItem();
-							handleClick(event);
-						}}
-					>
-						<MoreVertIcon />
-					</IconButton>
-				</Box> */}
+				<Box>
+					{/* <Box sx={flexContainer}>
+						<IconButton
+							onClick={(event) => {
+								setSelectedItem();
+								handleClick(event);
+							}}
+						>
+							<MoreVertIcon />
+						</IconButton>
+					</Box> */}
+					<Typography variant="body1" sx={titleStyles}>
+						{title || ""}
+					</Typography>
+				</Box>
 				<Box sx={advertCardStyles}>
 					<img src={image} alt="advert" width="100%" height="auto" />
 				</Box>

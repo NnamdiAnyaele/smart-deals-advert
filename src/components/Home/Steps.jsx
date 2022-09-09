@@ -43,10 +43,10 @@ const steps = () => {
 						</Box>
 					</Box>
 					<Typography variant="body1" sx={{ fontWeight: 500 }} gutterBottom>
-						Select advert type
+						Select advert location
 					</Typography>
 					<Typography variant="body2" gutterBottom>
-						Subscribe to a smartdeals discount club membership
+						Choose where you want your advert displayed
 					</Typography>
 				</Box>
 				<Box sx={{ width: "20rem", margin: { md: "0 4rem", xs: "1rem 0" } }}>
@@ -65,7 +65,7 @@ const steps = () => {
 						Upload advert
 					</Typography>
 					<Typography variant="body2" gutterBottom>
-						Upload your advert and select your date and time
+						Upload advert material and choose advert duration
 					</Typography>
 				</Box>
 				<Box sx={{ width: "20rem" }}>
@@ -84,7 +84,7 @@ const steps = () => {
 						Pay
 					</Typography>
 					<Typography variant="body2" gutterBottom>
-						Proceed to payment and then start seeing your advert
+						Proceed to pay for approved advert
 					</Typography>
 				</Box>
 			</Box>

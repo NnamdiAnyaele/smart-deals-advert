@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 
 import PasswordComponent from "./PasswordComponent";
 import SubmitButton from "./SubmitButton";
+import PasswordCheckCompoennt from "./PasswordCheckCompoennt";
 
 import {
 	specialCharacterCheck,
@@ -138,6 +139,8 @@ const ResetPasswordModal = ({
 								}
 							/>
 						</Box>
+
+						<PasswordCheckCompoennt password={formik.values.newPassword} />
 
 						<SubmitButton
 							text="reset password"

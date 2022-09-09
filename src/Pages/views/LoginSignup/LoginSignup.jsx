@@ -6,7 +6,8 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
 import Navbar from "../../../components/Home/NavBar";
-import FormFooter from "../../../components/common/FormFooter";
+// import FormFooter from "../../../components/common/FormFooter";
+import Footer from "../../../components/common/Footer";
 import LoginTabs from "../../../components/common/LoginTabs";
 import Login from "../../../components/common/Login";
 import SignUp from "../../../components/common/SignUp";
@@ -119,36 +120,34 @@ const LoginSignup = () => {
 	};
 
 	return (
-		<div>
-			<Box sx={containerStyles}>
-				<Navbar toggleFlag />
-				<Toolbar />
-				<Box sx={mainContainerStyles}>
-					<Box sx={flexContainer}>
-						<Box sx={formContainerStyles}>
-							<LoginTabs
-								activeTab={tab}
-								onSignupClick={() => setTab(SIGNUPTABS.SIGNUP)}
-								onLoginCLick={() => setTab(SIGNUPTABS.LOGIN)}
+		<Box sx={containerStyles}>
+			<Navbar toggleFlag />
+			<Toolbar />
+			<Box sx={mainContainerStyles}>
+				<Box sx={flexContainer}>
+					<Box sx={formContainerStyles}>
+						<LoginTabs
+							activeTab={tab}
+							onSignupClick={() => setTab(SIGNUPTABS.SIGNUP)}
+							onLoginCLick={() => setTab(SIGNUPTABS.LOGIN)}
+						/>
+						{tab === SIGNUPTABS.LOGIN && (
+							<Login
+								loginFields={defaultLoginFields}
+								handleSubmit={handleLoginSubmit}
 							/>
-							{tab === SIGNUPTABS.LOGIN && (
-								<Login
-									loginFields={defaultLoginFields}
-									handleSubmit={handleLoginSubmit}
-								/>
-							)}
-							{tab === SIGNUPTABS.SIGNUP && (
-								<SignUp
-									signUpFields={defaultSignUpFields}
-									handleSubmit={handleSignUpSubmit}
-								/>
-							)}
-						</Box>
+						)}
+						{tab === SIGNUPTABS.SIGNUP && (
+							<SignUp
+								signUpFields={defaultSignUpFields}
+								handleSubmit={handleSignUpSubmit}
+							/>
+						)}
 					</Box>
 				</Box>
 			</Box>
-			<FormFooter />
-		</div>
+			<Footer />
+		</Box>
 	);
 };
 

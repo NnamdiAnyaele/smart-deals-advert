@@ -1,191 +1,108 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-import AboutFooter from "./AboutFooter";
-import InformationFooter from "./InformationFooter";
-import OffersFooter from "./OffersFooter";
 import SocialsLogo from "./SocialsLogo";
-import logo from "../../assets/logos/smart-deals-logo-white.svg";
+// import logo from "../../assets/logos/smart-deals-logo-white.svg";
 import twitterLogo from "../../assets/logos/twitter-icon.svg";
 import linkedInLogo from "../../assets/logos/linkedin-icon.svg";
 import facebookLogo from "../../assets/logos/facebook-icon.svg";
 import instagramLogo from "../../assets/logos/instagram-icon.svg";
-import mailLogo from "../../assets/logos/mail-icon.svg";
+// import mailLogo from "../../assets/logos/mail-icon.svg";
 import googlePlayLogo from "../../assets/logos/google-play-badge.png";
 import appleStoreLogo from "../../assets/logos/apple-store.png";
+import TermsModal from "./TermsModal";
 
-const popperItemStyles = {
-	textDecoration: "none",
+const buttonStyles = {
 	color: "#fff",
 	fontSize: {
 		md: "0.8rem",
 		xs: "0.7rem",
 	},
+	textTransform: "none",
 };
 
-const Footer = ({ display = true }) => {
+const Footer = () => {
+	const [openTermsModal, setOpenTermsModal] = useState(false);
+	const [openPolicyModal, setOpenPolicyModal] = useState(false);
+
 	return (
 		<Box
 			sx={{
-				display: "flex",
+				position: "sticky",
+				top: "100vh",
+				width: "100%",
 				padding: {
-					md: "2rem 3rem 0 3rem",
 					xs: "1rem",
 				},
 				backgroundColor: "#222",
 				color: "#fff",
-				flexDirection: {
-					md: "row",
-					xs: "column",
-				},
 				textAlign: "center",
 			}}
 		>
 			<Box
 				sx={{
-					width: { md: "75%", xs: "100%" },
-					mr: { md: "2rem", xs: 0 },
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					mb: "1rem",
 				}}
 			>
-				<Grid container>
-					<Grid
-						item
-						xs={12}
-						md={3}
-						sx={{
-							display: "flex",
-							justifyContent: "center",
-							mb: {
-								md: 0,
-								xs: "3rem",
-							},
-						}}
+				<Box sx={{ mr: "1rem" }}>
+					<Button
+						variant="text"
+						sx={buttonStyles}
+						onClick={() => setOpenTermsModal(true)}
 					>
-						<Box
-							sx={{
-								height: "2rem",
-								width: "7.9rem",
-							}}
-						>
-							<img src={logo} alt="" height="auto" width="100%" />
-						</Box>
-					</Grid>
-
-					{display && (
-						<>
-							<Grid
-								item
-								xs={12}
-								md={3}
-								sx={{
-									display: "flex",
-									justifyContent: "center",
-									mb: {
-										md: 0,
-										xs: "3rem",
-									},
-								}}
-							>
-								<AboutFooter styles={popperItemStyles} />
-							</Grid>
-
-							<Grid
-								item
-								xs={12}
-								md={3}
-								sx={{
-									display: "flex",
-									justifyContent: "center",
-									mb: {
-										md: 0,
-										xs: "3rem",
-									},
-								}}
-							>
-								<InformationFooter styles={popperItemStyles} />
-							</Grid>
-
-							<Grid
-								item
-								xs={12}
-								md={3}
-								sx={{
-									display: "flex",
-									justifyContent: "center",
-									mb: {
-										md: 0,
-										xs: "3rem",
-									},
-								}}
-							>
-								<OffersFooter styles={popperItemStyles} />
-							</Grid>
-						</>
-					)}
-				</Grid>
-			</Box>
-			<Box
-				sx={{
-					width: { md: "25%", xs: "100%" },
-					textAlign: "start",
-				}}
-			>
-				<Grid
-					container
-					sx={{
-						mb: {
-							xs: "1rem",
-						},
-						display: "flex",
-						justifyContent: "center",
-					}}
-				>
-					<Grid
-						item
-						xs={12}
-						sx={{
-							paddingBottom: "0.5rem",
-							mr: "1rem",
-							display: "flex",
-							flexDirection: "column",
-							alignItems: { xs: "center", md: "flex-start" },
-						}}
+						Terms and conditions
+					</Button>
+					{" | "}
+					<Button
+						variant="text"
+						sx={buttonStyles}
+						onClick={() => setOpenPolicyModal(true)}
 					>
-						<Grid
-							sx={{
-								fontWeight: "600",
-								fontSize: "0.875rem",
-								textTransform: "uppercase",
-								mb: "0.5rem",
-							}}
-							item
-						>
-							socials
-						</Grid>
-						<Grid item sx={{ mb: "0.5rem" }}>
-							<Box sx={{ display: "flex" }}>
-								<SocialsLogo logo={twitterLogo} />
-								<SocialsLogo logo={linkedInLogo} />
-								<SocialsLogo logo={facebookLogo} />
-								<SocialsLogo logo={instagramLogo} />
-								<SocialsLogo logo={mailLogo} />
-							</Box>
-						</Grid>
+						Privacy Policy
+					</Button>
+				</Box>
 
-						<Grid item sx={{ mb: "1rem" }}>
-							<Box sx={{ height: "2.5rem", width: "8rem" }}>
-								<img src={googlePlayLogo} alt="" height="auto" width="100%" />
-							</Box>
-						</Grid>
+				<Box sx={{ display: "flex", mr: "1rem" }}>
+					<SocialsLogo logo={facebookLogo} />
+					<SocialsLogo logo={twitterLogo} />
+					<SocialsLogo logo={instagramLogo} />
+					<SocialsLogo logo={linkedInLogo} />
+				</Box>
 
-						<Grid item>
-							<Box sx={{ height: "2.5rem", width: "7rem", ml: "0.6rem" }}>
-								<img src={appleStoreLogo} alt="" height="auto" width="100%" />
-							</Box>
-						</Grid>
-					</Grid>
-				</Grid>
+				<Box sx={{ display: "flex", alignItems: "center" }}>
+					<Box sx={{ height: "2.5rem", width: "7rem" }}>
+						<img src={googlePlayLogo} alt="" height="100%" width="100%" />
+					</Box>
+					<Box sx={{ height: "1.7rem", width: "7rem", ml: "0.6rem" }}>
+						<img src={appleStoreLogo} alt="" height="100%" width="100%" />
+					</Box>
+				</Box>
 			</Box>
+
+			<Box>
+				<Typography variant="body2">
+					© 2022 Smart Deals. All rights reserved.
+				</Typography>
+			</Box>
+
+			<TermsModal
+				open={openTermsModal}
+				handleClose={() => setOpenTermsModal(false)}
+				title="Terms and Conditions"
+				file="https://doc.smartdeals.com.ng/files/admin/terms.pdf"
+			/>
+
+			<TermsModal
+				open={openPolicyModal}
+				handleClose={() => setOpenPolicyModal(false)}
+				title="Privacy Policy"
+				file="https://doc.smartdeals.com.ng/files/admin/privacy.pdf"
+			/>
 		</Box>
 	);
 };

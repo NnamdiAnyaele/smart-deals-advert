@@ -12,14 +12,14 @@ const FormFooter = () => {
 				justifyContent: "center",
 				p: "1rem",
 				alignItems: "center",
-				position: "fixed",
-				bottom: 0,
 				width: "100%",
 				backgroundColor: "#fff",
+				position: "sticky",
+				top: "100vh",
 			}}
 		>
 			<Typography component="div" variant="body1">
-				&copy; 2020 Smartdeals
+				&copy; 2022 Smartdeals
 			</Typography>
 			<Typography
 				component={Link}
@@ -32,7 +32,7 @@ const FormFooter = () => {
 					m: { md: "0 2rem", xs: "0 1rem" },
 				}}
 			>
-				Terms of Use
+				Terms and condition
 			</Typography>
 			<Typography
 				component={Link}

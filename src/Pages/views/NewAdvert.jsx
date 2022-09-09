@@ -21,7 +21,7 @@ import Card from "@mui/material/Card";
 
 // import GridItem from "../../components/common/GridItem";
 import NumberTextFieldComponent from "../../components/common/NumberTextField";
-// import SelectFieldComponent from "../../components/common/SelectFieldComponent";
+import TextFieldComponent from "../../components/common/TextFieldComponent";
 import AdvertPositionDetails from "../../components/common/AdvertPositionDetails";
 // import adsPreview from "../../assets/images/ad-homepage-positons.png";
 import AdvertPreviewModal from "../../components/common/AdvertPreviewModal";
@@ -39,25 +39,26 @@ import { fetchAdvertPositionInfo, placeAdvert } from "../../api/advert";
 
 const styles = {
 	padding: {
-		md: "3rem",
-		sm: "3rem 1rem",
-		xs: "3rem 1rem",
+		md: "1rem",
+		sm: "1rem 1rem",
+		xs: "1rem 1rem",
 	},
+	"&::-webkit-scrollbar": { width: 0 },
+	scrollbarWidth: "none",
 };
 
 // const gridContainerStyles = { mb: "2rem" };
 
 const selectFieldWidth = "18rem";
 
-// const flexContainerStyles = {
-// 	display: "flex",
-// };
+const flexContainerStyles = {
+	display: "flex",
+};
 
 // const advertPreviewContainerStyles = {
 // 	display: "flex",
 // 	justifyContent: "center",
 // 	width: { sm: "40rem", xs: "22rem" },
-// 	mt: "2rem",
 // 	p: "1rem",
 // };
 
@@ -67,7 +68,8 @@ const selectFieldWidth = "18rem";
 // };
 
 const advertDetailsContainerStyles = {
-	mb: "2rem",
+	mb: "1rem",
+	width: "18rem",
 };
 
 const buttonStyles = {
@@ -96,10 +98,12 @@ const loaderStyles = {
 };
 
 const validationSchema = yup.object({
+	title: yup.string().required("Advert title is required"),
 	days: yup.string().required("Number of days is required"),
 });
 
 const initialValues = {
+	title: "",
 	days: "",
 };
 
@@ -147,6 +151,7 @@ const NewAdvert = () => {
 				navigate("/customer/advert-history");
 			},
 			onError: (error) => {
+				formik.setSubmitting(false);
 				if (error.response) {
 					toast.error(error.response.data.message);
 				} else if (error.request) {
@@ -179,6 +184,7 @@ const NewAdvert = () => {
 		formData.append("region", user?.region);
 		formData.append("position", selectedPosition);
 		formData.append("days", values?.days);
+		formData.append("title", values?.title);
 
 		await submitAdvert(formData);
 	};
@@ -240,27 +246,6 @@ const NewAdvert = () => {
 
 	return (
 		<Box sx={styles}>
-			<Box
-				sx={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "space-between",
-					mb: "2rem",
-				}}
-			>
-				<Typography
-					variant="h6"
-					sx={{
-						fontWeight: 700,
-						textTransform: "capitalize",
-						mr: "auto",
-						whiteSpace: { sm: "nowrap" },
-					}}
-				>
-					ads setup
-				</Typography>
-			</Box>
-
 			{/* <Box
 				sx={{ width: { sm: "40rem", xs: "22rem" } }}
 				component="form"
@@ -304,7 +289,7 @@ const NewAdvert = () => {
 							/>
 							<AdvertPositionDetails
 								Icon={AttachMoneyIcon}
-								title="amount per day"
+								title="cost per day"
 								details={`${currencySymbolMap[user.region]} ${
 									numberFormatter(advertsData?.amount) || 0
 								}`}
@@ -656,7 +641,7 @@ const NewAdvert = () => {
 									display: "flex",
 									alignItems: "center",
 									justifyContent: "center",
-									mb: "2rem",
+									mb: "0.5rem",
 								}}
 							>
 								<Typography
@@ -681,49 +666,68 @@ const NewAdvert = () => {
 
 							{!advertsLoading && (
 								<Box sx={advertDetailsContainerStyles}>
-									<AdvertPositionDetails
-										Icon={PictureInPictureIcon}
-										title="position"
-										details={selectedPosition || "NA"}
-									/>
-									<AdvertPositionDetails
-										Icon={AttachMoneyIcon}
-										title="amount per day"
-										details={`${currencySymbolMap[user.region]} ${
-											numberFormatter(advertsData?.amount) || 0
-										}`}
-										color="#a65413"
-									/>
+									<Box sx={flexContainerStyles}>
+										<AdvertPositionDetails
+											Icon={PictureInPictureIcon}
+											title="position"
+											details={selectedPosition}
+										/>
+										<AdvertPositionDetails
+											Icon={AttachMoneyIcon}
+											title="cost per day"
+											details={`${currencySymbolMap[user.region]} ${
+												numberFormatter(advertsData?.amount) || 0
+											}`}
+											color="#a65413"
+										/>
+									</Box>
 
-									<AdvertPositionDetails
-										Icon={AspectRatioIcon}
-										title="size"
-										details={advertsData?.size || "NA"}
-										color="#A790A6"
-									/>
-									<AdvertPositionDetails
-										Icon={SettingsOverscanIcon}
-										title="dimension"
-										details={
-											(advertsData?.width &&
+									<Box sx={flexContainerStyles}>
+										<AdvertPositionDetails
+											Icon={AspectRatioIcon}
+											title="size"
+											details={advertsData?.size}
+											color="#A790A6"
+										/>
+										<AdvertPositionDetails
+											Icon={SettingsOverscanIcon}
+											title="dimension"
+											details={
+												advertsData?.width &&
 												advertsData?.height &&
-												`${advertsData?.width} x ${advertsData?.height}`) ||
-											"NA"
-										}
-										color="#3C9A9D"
-									/>
+												`${advertsData?.width} x ${advertsData?.height}`
+											}
+											color="#3C9A9D"
+										/>
+									</Box>
 								</Box>
 							)}
 
 							<Box>
 								<Box sx={formFieldStyles}>
+									<Box sx={formFieldStyles}>
+										<TextFieldComponent
+											width={selectFieldWidth}
+											value={formik.values.title}
+											onChange={formik.handleChange}
+											label="Title"
+											id="title"
+											name="title"
+											required
+											error={
+												formik.touched.title && Boolean(formik.errors.title)
+											}
+											helperText={formik.touched.title && formik.errors.title}
+										/>
+									</Box>
+
 									<TextField
 										id="advert-image"
 										label={advertImage?.file?.name || "Advert image"}
 										onChange={handleImageChange}
 										variant="outlined"
 										type="file"
-										helperText={`Rec: ${advertsData?.width} x ${advertsData?.height}  png (max 1mb)`}
+										helperText={`Rec: ${advertsData?.width} x ${advertsData?.height}  png (max ${advertsData?.size})`}
 										sx={{
 											input: {
 												opacity: 0,

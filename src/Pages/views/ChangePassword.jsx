@@ -13,6 +13,7 @@ import {
 	digitCheck,
 	uppercaseCheck,
 } from "../../utils/constants";
+import PasswordCheckCompoennt from "../../components/common/PasswordCheckCompoennt";
 
 const fields = {
 	currentPassword: "",
@@ -206,6 +207,8 @@ const ChangePassword = () => {
 									}
 								/>
 							</Box>
+
+							<PasswordCheckCompoennt password={formik.values.newPassword} />
 
 							<SubmitButton
 								text="update password"

@@ -60,23 +60,28 @@ const AdvertHistory = () => {
 	// const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [currentTab, setCurrentTab] = useState(0);
 	const [pendingAdverts, setPendingAdverts] = useState([]);
-	const [approvedAdverts, setApprovedAdverts] = useState([]);
+	// const [approvedAdverts, setApprovedAdverts] = useState([]);
 	const [rejectedAdverts, setRejectedAdverts] = useState([]);
 	const [paidAdverts, setPaidAdverts] = useState([]);
 	const [approvedUnpaidAdverts, setApprovedUnpaidAdverts] = useState([]);
 	const [pendingPage, setPendingPage] = useState(1);
-	const [approvedPage, setApprovedPage] = useState(1);
+	// const [approvedPage, setApprovedPage] = useState(1);
 	const [rejectedPage, setRejectedPage] = useState(1);
 	const [paidPage, setPaidPage] = useState(1);
 	const [approvedUnpaidPage, setApprovedUnpaidPage] = useState(1);
+	const [expiredPage, setExpiredPage] = useState(1);
 	const [displayedPendingAdverts, setDisplayedPendingAdverts] = useState([]);
-	const [displayedApprovedAdverts, setDisplayedApprovedAdverts] = useState([]);
+	// const [displayedApprovedAdverts, setDisplayedApprovedAdverts] = useState([]);
 	const [displayedRejectedAdverts, setDisplayedRejectedAdverts] = useState([]);
 	const [displayedPaidAdverts, setDisplayedPaidAdverts] = useState([]);
 	const [displayedApprovedUnpaidAdverts, setDisplayedApprovedUnpaidAdverts] =
 		useState([]);
 	const [size, setSize] = useState(9);
 	const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+	const [expiredAdverts, setExpiredAdverts] = useState([]);
+	const [displayedExpiredAdverts, setDisplayedExpiredAdverts] = useState([]);
+
+	console.log({ selectedItem });
 
 	const {
 		data: advertsData = [],
@@ -111,8 +116,8 @@ const AdvertHistory = () => {
 			const pending = advertsData.filter((item) => Number(item.status) === 0);
 			setPendingAdverts(pending);
 
-			const approved = advertsData.filter((item) => Number(item.status) === 1);
-			setApprovedAdverts(approved);
+			// const approved = advertsData.filter((item) => Number(item.status) === 1);
+			// setApprovedAdverts(approved);
 
 			const rejected = advertsData.filter((item) => Number(item.status) === 2);
 			setRejectedAdverts(rejected);
@@ -126,6 +131,9 @@ const AdvertHistory = () => {
 				(item) => Number(item.status) === 1 && Number(item.paid) === 0
 			);
 			setApprovedUnpaidAdverts(approvedUnpaid);
+
+			const expired = advertsData.filter((item) => Number(item.status) === 3);
+			setExpiredAdverts(expired);
 		}
 	}, [advertsData, advertsLoading]);
 
@@ -139,15 +147,15 @@ const AdvertHistory = () => {
 		}
 	}, [pendingAdverts, pendingPage]);
 
-	useEffect(() => {
-		if (approvedAdverts.length) {
-			const sliceData = approvedAdverts.slice(
-				(approvedPage - 1) * size,
-				approvedPage * size
-			);
-			setDisplayedApprovedAdverts(sliceData);
-		}
-	}, [approvedAdverts, approvedPage]);
+	// useEffect(() => {
+	// 	if (approvedAdverts.length) {
+	// 		const sliceData = approvedAdverts.slice(
+	// 			(approvedPage - 1) * size,
+	// 			approvedPage * size
+	// 		);
+	// 		setDisplayedApprovedAdverts(sliceData);
+	// 	}
+	// }, [approvedAdverts, approvedPage]);
 
 	useEffect(() => {
 		if (rejectedAdverts.length) {
@@ -178,6 +186,16 @@ const AdvertHistory = () => {
 			setDisplayedApprovedUnpaidAdverts(sliceData);
 		}
 	}, [approvedUnpaidAdverts, approvedUnpaidPage]);
+
+	useEffect(() => {
+		if (expiredAdverts.length) {
+			const sliceData = expiredAdverts.slice(
+				(expiredPage - 1) * size,
+				expiredPage * size
+			);
+			setDisplayedExpiredAdverts(sliceData);
+		}
+	}, [expiredAdverts, expiredPage]);
 
 	useEffect(() => {
 		if (isSmallScreen) {
@@ -277,11 +295,12 @@ const AdvertHistory = () => {
 						scrollButtons
 						allowScrollButtonsMobile
 					>
-						<Tab label="Pending Adverts" {...a11yProps(0)} />
-						<Tab label="Approved Adverts" {...a11yProps(1)} />
-						<Tab label="Rejected Adverts" {...a11yProps(2)} />
-						<Tab label="Paid Adverts" {...a11yProps(3)} />
-						<Tab label="Approved Unpaid Adverts" {...a11yProps(4)} />
+						<Tab label="Active Adverts" {...a11yProps(0)} />
+						<Tab label="Unpaid Adverts" {...a11yProps(1)} />
+						{/* <Tab label="Approved Adverts" {...a11yProps(2)} /> */}
+						<Tab label="Pending Adverts" {...a11yProps(2)} />
+						<Tab label="Rejected Adverts" {...a11yProps(3)} />
+						<Tab label="Expired Adverts" {...a11yProps(4)} />
 					</Tabs>
 				</Box>
 			</Box>
@@ -291,104 +310,8 @@ const AdvertHistory = () => {
 			<Box sx={advertsContainerStyles}>
 				{!advertsLoading && (
 					<>
-						{/* pending adverts */}
-						{currentTab === 0 && (
-							<Box>
-								<Grid container spacing={4}>
-									{displayedPendingAdverts.map((advert) => (
-										<Grid
-											item
-											xs={12}
-											sm={6}
-											lg={4}
-											sx={centerItem}
-											key={advert.id}
-										>
-											<AdvertCard
-												image={advert?.file}
-												setSelectedItem={() => setSelectedItem(advert)}
-												handleView={() => setViewModalOpen(true)}
-												// handleDelete={() => setDeleteModalOpen(true)}
-											/>
-										</Grid>
-									))}
-								</Grid>
-								<PaginationBox
-									count={Math.ceil(pendingAdverts?.length / size) || 0}
-									page={pendingPage}
-									handlePageChange={(event, value) => {
-										setPendingPage(value);
-									}}
-								/>
-							</Box>
-						)}
-
-						{/* approved adverts */}
-						{currentTab === 1 && (
-							<Box>
-								<Grid container spacing={4}>
-									{displayedApprovedAdverts.map((advert) => (
-										<Grid
-											item
-											xs={12}
-											sm={6}
-											lg={4}
-											sx={centerItem}
-											key={advert.id}
-										>
-											<AdvertCard
-												image={advert?.file}
-												setSelectedItem={() => setSelectedItem(advert)}
-												handleView={() => setViewModalOpen(true)}
-												// handleDelete={() => setDeleteModalOpen(true)}
-											/>
-										</Grid>
-									))}
-								</Grid>
-								<PaginationBox
-									count={Math.ceil(approvedAdverts?.length / size) || 0}
-									page={approvedPage}
-									handlePageChange={(event, value) => {
-										setApprovedPage(value);
-									}}
-								/>
-							</Box>
-						)}
-
-						{/* rejected adverts */}
-						{currentTab === 2 && (
-							<Box>
-								<Grid container spacing={4}>
-									{displayedRejectedAdverts.map((advert) => (
-										<Grid
-											item
-											xs={12}
-											sm={6}
-											lg={4}
-											sx={centerItem}
-											key={advert.id}
-										>
-											<AdvertCard
-												image={advert?.file}
-												setSelectedItem={() => setSelectedItem(advert)}
-												handleView={() => setViewModalOpen(true)}
-												// handleDelete={() => setDeleteModalOpen(true)}
-											/>
-										</Grid>
-									))}
-								</Grid>
-								<PaginationBox
-									count={Math.ceil(rejectedAdverts?.length / size) || 0}
-									page={rejectedPage}
-									handlePageChange={(event, value) => {
-										setRejectedPage(value);
-									}}
-								/>
-							</Box>
-						)}
-
 						{/* paid adverts */}
-						{currentTab === 3 && (
+						{currentTab === 0 && (
 							<Box>
 								<Grid container spacing={4}>
 									{displayedPaidAdverts.map((advert) => (
@@ -405,6 +328,7 @@ const AdvertHistory = () => {
 												setSelectedItem={() => setSelectedItem(advert)}
 												handleView={() => setViewModalOpen(true)}
 												// handleDelete={() => setDeleteModalOpen(true)}
+												title={advert?.title}
 											/>
 										</Grid>
 									))}
@@ -418,8 +342,9 @@ const AdvertHistory = () => {
 								/>
 							</Box>
 						)}
+
 						{/* approvedUnPaid adverts */}
-						{currentTab === 4 && (
+						{currentTab === 1 && (
 							<Box>
 								<Grid container spacing={4}>
 									{displayedApprovedUnpaidAdverts.map((advert) => (
@@ -436,6 +361,7 @@ const AdvertHistory = () => {
 												setSelectedItem={() => setSelectedItem(advert)}
 												handleView={() => setViewModalOpen(true)}
 												// handleDelete={() => setDeleteModalOpen(true)}
+												title={advert?.title}
 											/>
 										</Grid>
 									))}
@@ -445,6 +371,138 @@ const AdvertHistory = () => {
 									page={approvedUnpaidPage}
 									handlePageChange={(event, value) => {
 										setApprovedUnpaidPage(value);
+									}}
+								/>
+							</Box>
+						)}
+
+						{/* approved adverts */}
+						{/* {currentTab === 2 && (
+							<Box>
+								<Grid container spacing={4}>
+									{displayedApprovedAdverts.map((advert) => (
+										<Grid
+											item
+											xs={12}
+											sm={6}
+											lg={4}
+											sx={centerItem}
+											key={advert.id}
+										>
+											<AdvertCard
+												image={advert?.file}
+												setSelectedItem={() => setSelectedItem(advert)}
+												handleView={() => setViewModalOpen(true)}
+												// handleDelete={() => setDeleteModalOpen(true)}
+												title={advert?.title}
+											/>
+										</Grid>
+									))}
+								</Grid>
+								<PaginationBox
+									count={Math.ceil(approvedAdverts?.length / size) || 0}
+									page={approvedPage}
+									handlePageChange={(event, value) => {
+										setApprovedPage(value);
+									}}
+								/>
+							</Box>
+						)} */}
+
+						{/* pending adverts */}
+						{currentTab === 2 && (
+							<Box>
+								<Grid container spacing={4}>
+									{displayedPendingAdverts.map((advert) => (
+										<Grid
+											item
+											xs={12}
+											sm={6}
+											lg={4}
+											sx={centerItem}
+											key={advert.id}
+										>
+											<AdvertCard
+												image={advert?.file}
+												setSelectedItem={() => setSelectedItem(advert)}
+												handleView={() => setViewModalOpen(true)}
+												// handleDelete={() => setDeleteModalOpen(true)}
+												title={advert?.title}
+											/>
+										</Grid>
+									))}
+								</Grid>
+								<PaginationBox
+									count={Math.ceil(pendingAdverts?.length / size) || 0}
+									page={pendingPage}
+									handlePageChange={(event, value) => {
+										setPendingPage(value);
+									}}
+								/>
+							</Box>
+						)}
+
+						{/* rejected adverts */}
+						{currentTab === 3 && (
+							<Box>
+								<Grid container spacing={4}>
+									{displayedRejectedAdverts.map((advert) => (
+										<Grid
+											item
+											xs={12}
+											sm={6}
+											lg={4}
+											sx={centerItem}
+											key={advert.id}
+										>
+											<AdvertCard
+												image={advert?.file}
+												setSelectedItem={() => setSelectedItem(advert)}
+												handleView={() => setViewModalOpen(true)}
+												// handleDelete={() => setDeleteModalOpen(true)}
+												title={advert?.title}
+											/>
+										</Grid>
+									))}
+								</Grid>
+								<PaginationBox
+									count={Math.ceil(rejectedAdverts?.length / size) || 0}
+									page={rejectedPage}
+									handlePageChange={(event, value) => {
+										setRejectedPage(value);
+									}}
+								/>
+							</Box>
+						)}
+
+						{/* expired adverts */}
+						{currentTab === 4 && (
+							<Box>
+								<Grid container spacing={4}>
+									{displayedExpiredAdverts.map((advert) => (
+										<Grid
+											item
+											xs={12}
+											sm={6}
+											lg={4}
+											sx={centerItem}
+											key={advert.id}
+										>
+											<AdvertCard
+												image={advert?.file}
+												setSelectedItem={() => setSelectedItem(advert)}
+												handleView={() => setViewModalOpen(true)}
+												// handleDelete={() => setDeleteModalOpen(true)}
+												title={advert?.title}
+											/>
+										</Grid>
+									))}
+								</Grid>
+								<PaginationBox
+									count={Math.ceil(expiredAdverts?.length / size) || 0}
+									page={expiredPage}
+									handlePageChange={(event, value) => {
+										setExpiredPage(value);
 									}}
 								/>
 							</Box>
