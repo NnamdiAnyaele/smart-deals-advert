@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -67,7 +67,7 @@ const LoginSignup = () => {
 
 	const [tab, setTab] = useState(SIGNUPTABS.SIGNUP);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (isAuthenticated) {
 			navigate(userRedirectLinks[role]);
 		}

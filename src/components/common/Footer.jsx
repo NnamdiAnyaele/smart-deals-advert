@@ -14,6 +14,36 @@ import googlePlayLogo from "../../assets/logos/google-play-badge.png";
 import appleStoreLogo from "../../assets/logos/apple-store.png";
 import TermsModal from "./TermsModal";
 
+const style = {
+	position: "sticky",
+	top: "100vh",
+	width: "100%",
+	padding: {
+		xs: "1rem",
+	},
+	backgroundColor: "#222",
+	color: "#fff",
+	textAlign: "center",
+};
+
+const mainContainerStyles = {
+	display: "flex",
+	flexDirection: { xs: "column", md: "row" },
+	justifyContent: { md: "center", xs: "flex-start" },
+	alignItems: "center",
+	mb: "0.5rem",
+};
+
+const termsContainerStyles = { mr: "1rem", mb: { xs: "0.5rem", md: 0 } };
+
+const socialsStyles = {
+	display: "flex",
+	mr: { md: "1rem", xs: 0 },
+	mb: { xs: "0.5rem", md: 0, justifyContent: "center" },
+};
+
+const appsContainerStyles = { display: "flex", alignItems: "center" };
+
 const buttonStyles = {
 	color: "#fff",
 	fontSize: {
@@ -28,28 +58,9 @@ const Footer = () => {
 	const [openPolicyModal, setOpenPolicyModal] = useState(false);
 
 	return (
-		<Box
-			sx={{
-				position: "sticky",
-				top: "100vh",
-				width: "100%",
-				padding: {
-					xs: "1rem",
-				},
-				backgroundColor: "#222",
-				color: "#fff",
-				textAlign: "center",
-			}}
-		>
-			<Box
-				sx={{
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					mb: "1rem",
-				}}
-			>
-				<Box sx={{ mr: "1rem" }}>
+		<Box sx={style}>
+			<Box sx={mainContainerStyles}>
+				<Box sx={termsContainerStyles}>
 					<Button
 						variant="text"
 						sx={buttonStyles}
@@ -67,14 +78,14 @@ const Footer = () => {
 					</Button>
 				</Box>
 
-				<Box sx={{ display: "flex", mr: "1rem" }}>
+				<Box sx={socialsStyles}>
 					<SocialsLogo logo={facebookLogo} />
 					<SocialsLogo logo={twitterLogo} />
 					<SocialsLogo logo={instagramLogo} />
 					<SocialsLogo logo={linkedInLogo} />
 				</Box>
 
-				<Box sx={{ display: "flex", alignItems: "center" }}>
+				<Box sx={appsContainerStyles}>
 					<Box sx={{ height: "2.5rem", width: "7rem" }}>
 						<img src={googlePlayLogo} alt="" height="100%" width="100%" />
 					</Box>

@@ -81,8 +81,6 @@ const AdvertHistory = () => {
 	const [expiredAdverts, setExpiredAdverts] = useState([]);
 	const [displayedExpiredAdverts, setDisplayedExpiredAdverts] = useState([]);
 
-	console.log({ selectedItem });
-
 	const {
 		data: advertsData = [],
 		isLoading: advertsLoading,

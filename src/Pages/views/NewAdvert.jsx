@@ -26,6 +26,7 @@ import AdvertPositionDetails from "../../components/common/AdvertPositionDetails
 // import adsPreview from "../../assets/images/ad-homepage-positons.png";
 import AdvertPreviewModal from "../../components/common/AdvertPreviewModal";
 import AdvertPositionCard from "../../components/common/AdvertPositionCard";
+import TopMerchants from "../../components/Home/TopMerchants";
 import { numberFormatter } from "../../utils/helpers/functions";
 import { currencySymbolMap } from "../../utils/constants";
 import navigationImage from "../../assets/images/advert-page/navigation.png";
@@ -33,7 +34,6 @@ import threeStepsImage from "../../assets/images/advert-page/three-steps.png";
 import ongoingDealsImage from "../../assets/images/advert-page/ongoing-deals.png";
 import popularDealsImage from "../../assets/images/advert-page/popular-deals.png";
 import homepageMidImage from "../../assets/images/advert-page/homepage-mid.png";
-import topMerchantsImage from "../../assets/images/advert-page/top-merchants.png";
 import footerImage from "../../assets/images/advert-page/footer.png";
 import { fetchAdvertPositionInfo, placeAdvert } from "../../api/advert";
 
@@ -607,14 +607,9 @@ const NewAdvert = () => {
 											</Grid>
 										</Grid>
 									</Box>
-									<Box sx={advertImageContainerStyles}>
-										<img
-											src={topMerchantsImage}
-											alt=""
-											width="100%"
-											height="auto"
-										/>
-									</Box>
+
+									{/* top merchants */}
+									<TopMerchants smallDisplay />
 								</Box>
 								<Box sx={advertImageContainerStyles}>
 									<img src={footerImage} alt="" width="100%" height="auto" />

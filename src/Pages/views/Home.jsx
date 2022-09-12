@@ -8,6 +8,7 @@ import NavBar from "../../components/Home/NavBar";
 import WhyUse from "../../components/Home/WhyUse";
 import Steps from "../../components/Home/Steps";
 import Footer from "../../components/common/Footer";
+import TopMerchants from "../../components/Home/TopMerchants";
 import addGroup from "../../assets/images/add-group.png";
 import whyUseLogo1 from "../../assets/icons/why-use-logo-1.png";
 import whyUseLogo2 from "../../assets/icons/why-use-logo-2.png";
@@ -199,6 +200,8 @@ const Home = () => {
 				<Box sx={paddingStyles}>
 					<Steps />
 				</Box>
+
+				<TopMerchants />
 			</Box>
 			<Footer />
 		</Box>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
@@ -8,8 +8,9 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 
 import PaymentOption from "./PaymentOption";
-import { PAYMENTOPTIONS, currencySymbolMap } from "../../utils/constants";
-import { numberFormatter } from "../../utils/helpers/functions";
+import PaymentBreakDown from "./PaymentBreakDown";
+import Loader from "./Loader";
+import { PAYMENTOPTIONS } from "../../utils/constants";
 import closeIcon from "../../assets/icons/close-icon.svg";
 import {
 	getPaymentEndpoint,
@@ -37,48 +38,48 @@ const style = {
 	scrollbarWidth: "none",
 };
 
-const amountpayableContainerStyles = {
+const paymentOptionsContainerStyles = {
 	mb: "1rem",
-	backgroundColor: "#E6E6E6",
-	p: "1rem",
-	display: "flex",
-	justifyContent: "space-between",
-	alignItems: "center",
-	flexWrap: "wrap",
-	borderRadius: "1rem",
-	color: "#594E4E",
 };
 
-const totalAmountPayableStyle = {
+const paymentBreakdownStyles = {
+	mb: "1rem",
+};
+
+const payButtonContainerStyles = {
+	display: "flex",
+	justifyContent: "flex-end",
+};
+
+const buttonStyles = {
 	textTransform: "capitalize",
 };
-
-const amountStyles = { fontWeight: "bold" };
 
 const { protocol, host } = window.location;
 
 export default function PaymentModal({ open, handleClose, advert }) {
 	const { user, bizFrom, role } = useSelector((state) => state.auth);
-	const queryClient = useQueryClient();
 
 	const [paymentOption, setPaymentOption] = useState("");
+	const [chargeAmount, setChargeAmount] = useState(0);
+	const [showChargeAmount, setShowChargeAmount] = useState(false);
+	const [authorizationUrl, setAuthorizationUrl] = useState("");
 
 	const {
 		isLoading: getPaymentEndpointLoading,
 		isError: getPaymentEndpointError,
 		error: getPaymentEndpointErrorMessage,
-		refetch,
 	} = useQuery(
 		[
 			"get-payment-endpoint",
-			{ username: user?.username, region: user?.region },
+			{ username: user?.username, region: user?.region, paymentOption },
 		],
 		async () =>
 			getPaymentEndpoint({ channel: paymentOption, region: user?.region }),
 		{
 			select: (data) => data,
 			staleTime: Infinity,
-			enabled: false,
+			enabled: Boolean(paymentOption),
 			onSuccess: async (data) => {
 				if (data?.gateway === "paystack") {
 					await handleFetchPaymentTransactionDetails();
@@ -89,6 +90,8 @@ export default function PaymentModal({ open, handleClose, advert }) {
 			},
 		}
 	);
+
+	console.log({ paymentOption });
 
 	useEffect(() => {
 		if (getPaymentEndpointError) {
@@ -111,9 +114,9 @@ export default function PaymentModal({ open, handleClose, advert }) {
 		getPaymentTransactionDetails,
 		{
 			onSuccess: (data) => {
-				queryClient.invalidateQueries("fetch-adverts");
-				queryClient.invalidateQueries("fetch-approved-adverts");
-				window.location = data?.authorization_url;
+				setShowChargeAmount(true);
+				setChargeAmount(data?.charge);
+				setAuthorizationUrl(data?.authorization_url);
 			},
 			onError: (error) => {
 				if (error.response) {
@@ -154,9 +157,9 @@ export default function PaymentModal({ open, handleClose, advert }) {
 		getZenithPaymentTransactionDetails,
 		{
 			onSuccess: (data) => {
-				queryClient.invalidateQueries("fetch-adverts");
-				queryClient.invalidateQueries("fetch-approved-adverts");
-				window.location = data?.authorization_url;
+				setShowChargeAmount(true);
+				setChargeAmount(data?.charge);
+				setAuthorizationUrl(data?.authorization_url);
 			},
 			onError: (error) => {
 				if (error.response) {
@@ -186,6 +189,10 @@ export default function PaymentModal({ open, handleClose, advert }) {
 			shippingFee: 0,
 		};
 		await fetchZenithPaymentTransactionDetails(payload);
+	};
+
+	const handlePay = () => {
+		window.location.href = authorizationUrl;
 	};
 
 	return (
@@ -228,22 +235,13 @@ export default function PaymentModal({ open, handleClose, advert }) {
 							</Typography>
 						</Box>
 
-						<Box>
-							<Box sx={amountpayableContainerStyles}>
-								<Typography variant="body1" sx={totalAmountPayableStyle}>
-									total amount payable
-								</Typography>
-								<Typography variant="h6" sx={amountStyles}>
-									{`${currencySymbolMap[user.region]} ${numberFormatter(
-										advert?.amount
-									)}`}
-								</Typography>
-							</Box>
+						<Box sx={paymentOptionsContainerStyles}>
 							<PaymentOption
 								title="Pay with Bank"
 								isSelected={paymentOption === PAYMENTOPTIONS.BANK}
-								onCardClick={() => setPaymentOption(PAYMENTOPTIONS.BANK)}
-								onButtonClick={refetch}
+								onCardClick={() => {
+									setPaymentOption(PAYMENTOPTIONS.BANK);
+								}}
 								loading={
 									getPaymentEndpointLoading ||
 									getPaymentTransactionDetailsLoading ||
@@ -253,10 +251,9 @@ export default function PaymentModal({ open, handleClose, advert }) {
 							<PaymentOption
 								title="Pay with Bank Transfer"
 								isSelected={paymentOption === PAYMENTOPTIONS.BANKTRANSFER}
-								onCardClick={() =>
-									setPaymentOption(PAYMENTOPTIONS.BANKTRANSFER)
-								}
-								onButtonClick={refetch}
+								onCardClick={() => {
+									setPaymentOption(PAYMENTOPTIONS.BANKTRANSFER);
+								}}
 								loading={
 									getPaymentEndpointLoading ||
 									getPaymentTransactionDetailsLoading ||
@@ -266,8 +263,9 @@ export default function PaymentModal({ open, handleClose, advert }) {
 							<PaymentOption
 								title="Pay with Card"
 								isSelected={paymentOption === PAYMENTOPTIONS.CARD}
-								onCardClick={() => setPaymentOption(PAYMENTOPTIONS.CARD)}
-								onButtonClick={refetch}
+								onCardClick={() => {
+									setPaymentOption(PAYMENTOPTIONS.CARD);
+								}}
 								loading={
 									getPaymentEndpointLoading ||
 									getPaymentTransactionDetailsLoading ||
@@ -277,8 +275,9 @@ export default function PaymentModal({ open, handleClose, advert }) {
 							<PaymentOption
 								title="Pay with USSD"
 								isSelected={paymentOption === PAYMENTOPTIONS.USSD}
-								onCardClick={() => setPaymentOption(PAYMENTOPTIONS.USSD)}
-								onButtonClick={refetch}
+								onCardClick={() => {
+									setPaymentOption(PAYMENTOPTIONS.USSD);
+								}}
 								loading={
 									getPaymentEndpointLoading ||
 									getPaymentTransactionDetailsLoading ||
@@ -286,6 +285,34 @@ export default function PaymentModal({ open, handleClose, advert }) {
 								}
 							/>
 						</Box>
+
+						<Box sx={paymentBreakdownStyles}>
+							<PaymentBreakDown title="subtotal:" amount={advert?.amount} />
+							{showChargeAmount && (
+								<PaymentBreakDown title="charges:" amount={chargeAmount} />
+							)}
+							<PaymentBreakDown
+								title="total:"
+								amount={Number(advert?.amount) + Number(chargeAmount)}
+								makeBold
+							/>
+						</Box>
+
+						{(getPaymentEndpointLoading ||
+							getPaymentTransactionDetailsLoading ||
+							fetchZenithPaymentTransactionDetailsLoading) && <Loader />}
+
+						{showChargeAmount && (
+							<Box sx={payButtonContainerStyles}>
+								<Button
+									sx={buttonStyles}
+									variant="contained"
+									onClick={handlePay}
+								>
+									pay
+								</Button>
+							</Box>
+						)}
 					</Box>
 				</Box>
 			</Modal>
